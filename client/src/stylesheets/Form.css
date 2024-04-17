@@ -16,22 +16,22 @@
     margin: 10px 0 5px; 
   }
   .questionForm input[type="text"], .questionForm textarea,
-  .answerForm input[type="text"], .answerForm textarea{
+  .answerForm input[type="text"], .answerForm textarea {
     width: 100%; 
     min-width: 700px;
     padding: 10px; 
     margin-bottom: 10px; 
     border: 1px solid #6c6c6c;
   }
-  .questionForm textarea, .answerForm textarea{
+  .questionForm textarea, .answerForm textarea {
     height: 200px; 
   }
-  .questionForm .post-box, .answerForm .post-box{
+  .questionForm .post-box, .answerForm .post-box {
     display: flex;
     justify-content: space-between;
     padding-top: 20px;
   }
-  .questionForm button, .answerForm button{
+  .questionForm button, .answerForm button {
     background-color: #007BFF; 
     color: white; 
     padding: 12px 15px; 
@@ -40,10 +40,10 @@
     cursor: pointer; 
     align-self: flex-start;
   }
-  .questionForm button:hover, .answerForm button:hover{
+  .questionForm button:hover, .answerForm button:hover {
     background-color: #0056b3; 
   }
-  .questionForm .required-text, .answerForm .required-text{
+  .questionForm .required-text, .answerForm .required-text {
     color: red; 
     font-size: 15px;
     display: flex;

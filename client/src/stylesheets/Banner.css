@@ -4,11 +4,19 @@
     background-color: #c5c5c5;
     display: flex;
     justify-content: space-between;
-    /* width: 100%; */
     align-items: center; 
     justify-content: center;
     z-index: 1000;
-    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+}
+
+.bannerPlain {
+    position: sticky;
+    top: 0;
+    background-color: #c5c5c5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    justify-content: center;
 }
 
 .title {
