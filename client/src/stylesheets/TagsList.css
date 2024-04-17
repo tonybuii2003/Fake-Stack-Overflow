@@ -1,0 +1,46 @@
+.tagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 40px; 
+    align-items: flex-start;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  /* This isn't used because of width: calc... in .tagCell but I'm leaving it just in case -Vitaliy */
+  /* .tagsContainerRow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 40px;
+    width: 100%;
+  } */
+  
+  .tagCell {
+      width: calc(33.33% - 40px); /* 250px originally */
+      padding: 10px;
+      background-color: #ffffff;
+      box-sizing: border-box;
+      border-style: dashed;
+      border-radius: 1px;
+      text-align: center;
+      word-wrap: break-word;
+      font-family: sans-serif;
+    }
+  
+  .tagCellTitle {
+      color: #007bff; 
+      font-family: sans-serif;
+      cursor: pointer; 
+      font-size: 25px;
+      text-decoration: underline;
+      display: inline;
+    }
+  
+  .tagCellQuestionCount {
+      font-family: sans-serif;
+      font-size: 20px;
+      color: #000000;
+    }
+  

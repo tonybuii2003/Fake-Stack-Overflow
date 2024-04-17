@@ -1,0 +1,10 @@
+node_modules/
+build/
+dist/
+.env*
+.DS_Store
+.cache/
+coverage/
+*.log
+package-lock.json
+package.json

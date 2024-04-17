@@ -1,0 +1,32 @@
+.sidebarNav {
+    text-align: center;
+    border-right: dotted 3px;
+    height: 100%;
+    width: 200px;
+    position: relative;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    padding-top: 35px;
+    flex: 0 0 auto;
+}
+.sidebarNav button{
+    text-decoration: none;
+    font-size: 26px;
+    color: #007bff;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    display: inline-block;
+    cursor: pointer;
+    padding: 15px;
+    margin: 4px 2px;
+    margin-bottom: 25px;
+    border: none;
+    box-sizing: border-box;
+    width: calc(100% - 4px);
+}
+.sidebarNav button:hover {
+    color: rgb(159, 170, 253)
+}

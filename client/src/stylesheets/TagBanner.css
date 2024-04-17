@@ -1,0 +1,25 @@
+.tagBanner {
+    display: flex; 
+    justify-content: space-between; 
+    padding: 40px; 
+}
+
+.leftSectionTags {
+    display: flex; 
+    gap: 20px; /* 420px */
+}
+
+.allTagsText {
+    font-weight: bold;
+    font-size: 30px;
+    color: #000000;
+    font-family: sans-serif;
+    margin: 0px 0px;
+}
+
+.tagCountText {
+    font-weight: bold;
+    font-size: 30px;
+    color: #000000;
+    font-family: sans-serif;
+}
