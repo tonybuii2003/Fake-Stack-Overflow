@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../stylesheets/Form.css';
 import '../stylesheets/UserLoginRegisterForms.css';
+import axios from 'axios';
 function UserRegisterForm({switchSubpageFunc}) {
 
   const [fullname, setFullname] = useState('');
@@ -23,7 +24,7 @@ function UserRegisterForm({switchSubpageFunc}) {
     }
   }
 
-  const registerUser = async (fullname, username, password, passwordVerify) => {
+  const registerNewUser = async (fullname, username, password, passwordVerify) => {
     let fullnameTrim = fullname.replace(/\s+/g, ' ');
     let names = fullnameTrim.split(' ');
     names = names.filter(name => name !== '' && name !== ' ');
@@ -32,8 +33,8 @@ function UserRegisterForm({switchSubpageFunc}) {
         alert('Full names only include a first name and a last name, and may not have any special characters.');
         return;
     }
-    let firstname = names[0];
-    let lastname = names[1];
+    const firstname = names[0];
+    const lastname = names[1];
     const nameRegex = /[\p{P}\p{S}\p{N}]/u;
     if(nameRegex.test(firstname) || nameRegex.test(lastname)){
         alert('Full names only include a first name and a last name, and may not have any special characters.');
@@ -49,7 +50,18 @@ function UserRegisterForm({switchSubpageFunc}) {
     
     const usernameRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
     if(usernameRegex.test(usernameTrim)){
-        alert('Valid email');
+        try {
+            await axios.post(`http://localhost:8000/register`, {
+              first_name: firstname,
+              last_name: lastname,
+              email: username,
+              password: passwordTrim,
+            });
+            switchSubpageFunc("login");
+        } catch (error) {
+            console.error('Failed to register user:', error);
+            alert('Error registering user: ' + (error.response?.data?.message || error.message));
+        }
     }
     else {
         alert('Invalid email');
@@ -57,9 +69,9 @@ function UserRegisterForm({switchSubpageFunc}) {
   };
 
   const handleVerificationBox = (e) => {
-    setPasswordVerification(e);
+    const textPass = document.getElementById("passwordVerification");
     const text = document.getElementById("passwordVerificationStatus");
-    if(e !== password){
+    if(e !== password && e !== '' && e !== undefined && textPass.textContent !== undefined){
         text.style.display = "block";
         text.style.color = "red";
         text.style.paddingBottom = 0;
@@ -67,16 +79,27 @@ function UserRegisterForm({switchSubpageFunc}) {
         document.getElementById("post-box").style.paddingTop = 0;
     }
     else {
-        text.style.display = "none";
         document.getElementById("post-box").style.paddingTop = 20;
+        text.style.display = "block";
+        text.textContent = " ";
+        text.style.paddingBottom = 0;
     }
-    console.log("Pass:", password);
-    console.log("Verify:", passwordVerification);
   };
   
   const handleSubmit = (e) => {
-    //alert('This feature is not done yet.');
-    registerUser(fullname, username, password, passwordVerification);
+    e.preventDefault(); 
+    registerNewUser(fullname, username, password, passwordVerification);
+  }
+
+  const handleFormChanges = (t, e) => {
+    if(t === 'password'){
+      setPassword(e);
+      setPasswordVerification('');
+    }
+    else if(t === 'verify'){
+      setPasswordVerification(e);
+    }
+    handleVerificationBox(e);
   }
 
     /*
@@ -155,7 +178,7 @@ function UserRegisterForm({switchSubpageFunc}) {
               required
               maxLength="256"
               value={password} 
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => handleFormChanges('password', e.target.value)}
             />
             <label htmlFor="passwordVerification">Verify Password</label>
             <input
@@ -166,7 +189,7 @@ function UserRegisterForm({switchSubpageFunc}) {
               required
               maxLength="256"
               value={passwordVerification} 
-              onChange={(e) => handleVerificationBox(e.target.value)}
+              onChange={(e) => handleFormChanges('verify', e.target.value)}
             />
             <div id="passwordVerificationStatus"></div>
             <br />

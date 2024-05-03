@@ -4,6 +4,7 @@ const connectDB = require("./config/db");
 const answerRouter = require("./routes/answerRoutes");
 const questionRouter = require("./routes/questionRoutes");
 const tagRouter = require("./routes/tagRoutes");
+const userRouter = require('./routes/userRoutes');
 const mongoose = require("mongoose");
 const port = 8000;
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/", answerRouter);
 app.use("/", questionRouter);
 app.use("/", tagRouter);
+app.use('/', userRouter);
 
 const server = app.listen(port, () => console.log(`Server listening on port ${port}`));
 
