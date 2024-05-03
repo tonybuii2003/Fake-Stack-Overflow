@@ -86,6 +86,14 @@
   border: 1px solid #6c6c6c;
 }
 
+.passwordVerificationStatus {
+  
+  margin-bottom: 0px;
+  margin: 0px;
+  padding: 0px;
+  color: green;
+}
+
 .loginForm textarea, .registerForm textarea {
   height: 200px; 
 }
