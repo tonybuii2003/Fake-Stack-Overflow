@@ -3,9 +3,9 @@ import '../stylesheets/App.css';
 import UserLoginForm from '../components/UserLoginForm';
 import UserRegisterForm from '../components/UserRegisterForm';
 import BannerStatic from '../components/BannerStatic';
-import FakeStackOverflow from '../components/fakestackoverflow';
+import HomePage from './Home';
 
-export default function WelcomePage() {
+export default function WelcomePage({setTryLogin, tryLogin}) {
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
   const [showGuest, setShowGuest] = useState(false);
@@ -44,11 +44,13 @@ export default function WelcomePage() {
         {showLogin && 
         <UserLoginForm
           switchSubpageFunc = {switchSubpageFunc}
+          setTryLogin={setTryLogin}
+          tryLogin={tryLogin}
           ></UserLoginForm>}
         {showRegister && <UserRegisterForm
         switchSubpageFunc = {switchSubpageFunc}
         ></UserRegisterForm>}
-        {showGuest && <FakeStackOverflow></FakeStackOverflow>}
+        {showGuest && <HomePage/>}
       </section>
     </section>
   );

@@ -6,18 +6,25 @@ const questionRouter = require("./routes/questionRoutes");
 const tagRouter = require("./routes/tagRoutes");
 const userRouter = require('./routes/userRoutes');
 const mongoose = require("mongoose");
+const cookieParser = require('cookie-parser');
 const port = 8000;
-
+const corsOptions = {
+    origin: 'http://localhost:3000', 
+    credentials: true, 
+  };
+  
 connectDB();
 
 const app = express();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use("/", answerRouter);
 app.use("/", questionRouter);
 app.use("/", tagRouter);
 app.use('/', userRouter);
+
 
 const server = app.listen(port, () => console.log(`Server listening on port ${port}`));
 

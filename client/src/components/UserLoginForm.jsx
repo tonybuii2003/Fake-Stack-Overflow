@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import '../stylesheets/Form.css';
 import '../stylesheets/UserLoginRegisterForms.css';
-function UserLoginForm({switchSubpageFunc}) {
+import axios from 'axios';
+function UserLoginForm({switchSubpageFunc, setTryLogin, tryLogin}) {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -22,10 +23,18 @@ function UserLoginForm({switchSubpageFunc}) {
     }
   }
   
-  const handleSubmit = (e) => {
-    alert('This feature is not done yet.');
+  const handleSubmit = async (e) => {
+    console.log('username:', username, 'password:', password)
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:8000/login', { email: username, password: password });
+      console.log('Login response:', response);
+      setTryLogin(!tryLogin)
+    } catch (error) {
+      alert('Login Failed: Your email or password is incorrect');
+      console.error('Login error:', error);
   }
-  
+}
   // const loginUser = async (username, password) => {
 
   // };

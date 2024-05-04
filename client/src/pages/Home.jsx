@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../stylesheets/App.css';
-import Banner from './Banner';
+import Banner from '../components/Banner';
 import SidebarNav from '../components/SideNavBar';
 
 export default function FakeStackOverflow() {
