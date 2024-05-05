@@ -27,7 +27,7 @@ function Questions({showQuestionFormFunc, showQuestionAndAnswersFunc, setCurrent
     };
     fetchTags();
     fetchQuestions();
-  }, [allQuestions]); 
+  }, []); 
 
   return (
     <div className="questions">

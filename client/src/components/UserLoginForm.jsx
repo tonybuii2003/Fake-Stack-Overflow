@@ -35,9 +35,6 @@ function UserLoginForm({switchSubpageFunc, setTryLogin, tryLogin}) {
       console.error('Login error:', error);
   }
 }
-  // const loginUser = async (username, password) => {
-
-  // };
   
   return (
     <div className="loginContentWrapper">

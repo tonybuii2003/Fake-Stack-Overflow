@@ -5,7 +5,11 @@ import Questions from '../components/Questions';
 import QuestionForm from './QuestionForm';
 import QuestionAndAnswers from './QuestionAndAnswers';
 import AnswerForm from './AnswerForm';
-function SideNavBar({showQuestions, setShowQuestions, showTags, setShowTags, showSearchResults, setShowSearchResults, currentSearchQuery, setCurrentSearchQuery, currentSearchTag, setCurrentSearchTag, onSubmitSearch, setOnSubmitSearch}) {
+function SideNavBar({showQuestions, setShowQuestions, 
+    showTags, setShowTags, showSearchResults, 
+    setShowSearchResults, currentSearchQuery, 
+    setCurrentSearchQuery, currentSearchTag, 
+    setCurrentSearchTag, onSubmitSearch, user}) {
     const [option, setOption] = useState('newest');
     const [questionFormOpened, setQuestionFormOpened] = useState(false);
     const [questionBackgroundColor, setQuestionBackgroundColor] = useState('#d2d2d2');
@@ -13,6 +17,7 @@ function SideNavBar({showQuestions, setShowQuestions, showTags, setShowTags, sho
     const [showQuestionAndAnswers, setQuestionAndAnswers] = useState(false);
     const [showAnswerForm, setShowAnswerForm] = useState(false);
     const [currentQID, setCurrentQID] = useState('null');
+    console.log("current user: ", user);
     useEffect(() => {
         showQuestionsSearchFunc();
       }, [onSubmitSearch]); 
@@ -107,14 +112,15 @@ function SideNavBar({showQuestions, setShowQuestions, showTags, setShowTags, sho
                 currentSearchTag={currentSearchTag}
                 onSubmitSearch={onSubmitSearch}
                 />}
-            {questionFormOpened && <QuestionForm showQuestionsFunc = {showQuestionsFunc}/> }
+            {questionFormOpened && <QuestionForm showQuestionsFunc = {showQuestionsFunc} user={user}/> }
             {showQuestionAndAnswers && <QuestionAndAnswers 
                                         qid = {currentQID}  
                                         showQuestionFormFunc = {showQuestionFormFunc}
-                                        showAnswerFormFunc = {showAnswerFormFunc}/>}
+                                        showAnswerFormFunc = {showAnswerFormFunc}
+                                        user={user}/>}
             {showAnswerForm && <AnswerForm 
                                 qid = {currentQID} 
-                                showQuestionAndAnswersFunc = {showQuestionAndAnswersFunc}/>}
+                                showQuestionAndAnswersFunc = {showQuestionAndAnswersFunc} user={user}/>}
             
             {showTags &&
             <Tags

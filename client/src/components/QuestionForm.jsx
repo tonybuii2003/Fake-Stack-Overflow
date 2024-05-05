@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import '../stylesheets/Form.css';
 import axios from 'axios';
-function QuestionForm({model, showQuestionsFunc}) {
+function QuestionForm({showQuestionsFunc, user}) {
   const [questionTitle, setQuestionTitle] = useState('');
   const [questionText, setQuestionText] = useState('');
   const [questionTags, setQuestionTags] = useState('');
-  const [username, setUsername] = useState('');
+  const [questionSummary, setQuestionSummary] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault(); 
     const hyperlinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
@@ -21,19 +22,25 @@ function QuestionForm({model, showQuestionsFunc}) {
       return;
     }
 
-    addNewQuestion(questionTitle, questionText, questionTags, username);
+    addNewQuestion(questionTitle, questionText, questionTags, user.username, questionSummary);
     console.log({ questionTitle });
   }
   
-  const addNewQuestion = async (questionTitle, questionText, questionTags, username) => {
+  const addNewQuestion = async (questionTitle, questionText, questionTags, username, questionSummary) => {
     questionTitle = questionTitle.trim();
     questionText = questionText.trim();
     username = username.trim();
     questionTags = questionTags.trim();
+    questionSummary = questionSummary.trim();
+    console.log('summary:', questionSummary);
     const tags = Array.from(new Set(questionTags.split(/\s+/).filter(Boolean).map(tag => tag.toLowerCase())));
 
-    if (questionTitle.length > 100) {
-      alert('The title must not exceed 100 characters.');
+    if (questionTitle.length > 50) {
+      alert('The title must not exceed 50 characters.');
+      return;
+    }
+    if (questionSummary.length > 140) {
+      alert('The summary must not exceed 140 characters.');
       return;
     }
     if (!questionTitle || !questionText || !username || !questionTags) {
@@ -55,6 +62,7 @@ function QuestionForm({model, showQuestionsFunc}) {
     try {
         await axios.post('http://localhost:8000/question', {
             title: questionTitle,
+            summary: questionSummary,
             text: questionText,
             tags: tags,
             asked_by: username
@@ -62,7 +70,7 @@ function QuestionForm({model, showQuestionsFunc}) {
         setQuestionTitle('');
         setQuestionText('');
         setQuestionTags('');
-        setUsername('');
+        setQuestionSummary('');
         showQuestionsFunc(); 
     } catch (error) {
         console.error('Failed to post the question:', error);
@@ -83,6 +91,15 @@ function QuestionForm({model, showQuestionsFunc}) {
           value={questionTitle} 
           onChange={(e) => setQuestionTitle(e.target.value)}
         />
+        <label htmlFor="questionSummary">Question Summary*</label>
+        <textarea
+          id="questionSummary"
+          name="questionSummary"
+          placeholder="Summarize your question"
+          required
+          value={questionSummary}
+          onChange={(e) => setQuestionSummary(e.target.value)}
+        ></textarea>
         <label htmlFor="questionText">Question Text*</label>
         <textarea 
           id="questionText" 
@@ -102,16 +119,6 @@ function QuestionForm({model, showQuestionsFunc}) {
           value = {questionTags}
           onChange={(e) => setQuestionTags(e.target.value)}
         />
-        <label htmlFor="username">Username*</label>
-        <input 
-          type="text" 
-          id="username" 
-          name="username" 
-          placeholder="Username" 
-          required
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        /> <br />
         <div className="post-box">
           <button type="submit" id="postQuestion">Post Question</button>
           <span className="required-text">* indicates mandatory fields</span>

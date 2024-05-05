@@ -26,6 +26,9 @@
   .questionForm textarea, .answerForm textarea {
     height: 200px; 
   }
+  #questionSummary{
+    height: 100px; 
+  }
   .questionForm .post-box, .answerForm .post-box {
     display: flex;
     justify-content: space-between;
@@ -50,3 +53,42 @@
     justify-content: flex-end;
     align-self: flex-end; 
   }
+
+  .comment-form {
+    display: flex;
+    flex-direction: column;
+    /* padding: 20px; */
+    border-radius: 5px;
+    width: 98%;  
+  }
+  .comment-form input[type="text"] {
+    padding: 8px 10px;
+    margin-bottom: 10px;  /* Spacing between input and button */
+    border: 1px solid #6c6c6c; /* Styling the border */
+    
+  }
+  
+  .comment-form button {
+    
+    width: 15%;  
+    background-color: #007BFF;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .comment-form button:hover {
+    background-color: #0056b3; 
+  }
+  
+  /* Additional responsive adjustments might be necessary depending on your layout */
+  @media (max-width: 768px) {
+    .comment-form {
+      padding: 10px;
+      font-size: 14px;
+    }
+    .comment-form input[type="text"], .comment-form button {
+      width: 98%;
+    }
+  }  

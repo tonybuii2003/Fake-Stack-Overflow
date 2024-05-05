@@ -1,9 +1,8 @@
 import React, {useState} from "react";
 import '../stylesheets/Form.css';
 import axios from 'axios';
-function AnswerForm({qid, showQuestionAndAnswersFunc}) {
+function AnswerForm({qid, showQuestionAndAnswersFunc, user}) {
     const [answerText, setAnswerText] = useState('');
-    const [answerUsername, setAnswerUsername] = useState('');
     const handdleSubmit = (e) => {
         e.preventDefault();
         const hyperlinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
@@ -18,7 +17,7 @@ function AnswerForm({qid, showQuestionAndAnswersFunc}) {
         alert('There is an incorrectly formatted hyperlink in your text.');
         return;
         }
-        addNewAnswer(answerText, answerUsername);
+        addNewAnswer(answerText, user.username);
     }
     const addNewAnswer = async (text, username) => {
         text = text.trim();
@@ -33,7 +32,6 @@ function AnswerForm({qid, showQuestionAndAnswersFunc}) {
                 ans_by: username
             });
             setAnswerText('');
-            setAnswerUsername('');
             showQuestionAndAnswersFunc();
         } catch (error) {
             console.error('Failed to post the answer:', error);
@@ -52,19 +50,7 @@ function AnswerForm({qid, showQuestionAndAnswersFunc}) {
                     value={answerText}
                     onChange={(e) => setAnswerText(e.target.value)}
                 />
-                <label 
-                    htmlFor="usernameAnswer">Username*
-                </label>
-                <input 
-                    type="text" 
-                    id="usernameAnswer" 
-                    name="usernameAnswer" 
-                    placeholder="Username" 
-                    required
-                    value={answerUsername}
-                    onChange={(e) => setAnswerUsername(e.target.value)}
-                    >
-                </input>
+                
                 <div className="post-box">
                 <button type="submit" id="postAnswer" >Post Answer</button>
                 <span className="required-text">* indicates mandatory fields</span>

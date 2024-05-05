@@ -3,7 +3,7 @@ import '../stylesheets/App.css';
 import UserLoginForm from '../components/UserLoginForm';
 import UserRegisterForm from '../components/UserRegisterForm';
 import BannerStatic from '../components/BannerStatic';
-import HomePage from './Home';
+import HomePage from './HomePage';
 
 export default function WelcomePage({setTryLogin, tryLogin}) {
   const [showLogin, setShowLogin] = useState(true);
