@@ -21,6 +21,27 @@ body {
   background-color: #0056b3; 
 }
 
+#themeButtonPrevOn, #themeButtonNext {
+  background-color: #c5c5c5; 
+  color: black;
+  padding: 6px 10px;  
+  border: 2px solid #000000; 
+  font-size: 16px;
+  cursor: pointer;  
+}
+
+#themeButtonPrevOff {
+  background-color: #5a5a5a; 
+  color: black;
+  padding: 6px 10px; 
+  border: 2px solid #000000; 
+  font-size: 16px;
+}
+
+#themeButtonPrevOn:hover,#themeButtonNext:hover {
+  background-color: #909090; 
+}
+
 #loading {
   display: flex;
   margin: 40px;

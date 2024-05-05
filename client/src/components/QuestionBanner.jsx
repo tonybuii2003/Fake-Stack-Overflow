@@ -1,7 +1,7 @@
 import React from 'react';
 import '../stylesheets/QuestionBanner.css';
 
-function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showSearchResults, currentSearchTag, onSubmitSearch, setAllQuestions, savedDisplayedQuestionCount}) {
+function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showSearchResults, currentSearchTag, onSubmitSearch, setAllQuestions, savedDisplayedQuestionCount, startIndex, setStartIndex}) {
     let allQuestionsText;
     let questionCount;
     if(showSearchResults){
@@ -22,14 +22,47 @@ function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showS
     const handleClick = () => {
         showQuestionFormFunc()
     }
+
+    const currentPage = Math.floor(startIndex / 5) + 1;
+    const lastPage = Math.ceil(questionCount / 5);
+
+    const handleNext = () => {
+      // wrap around if > pagemax
+      let updatedIndex = startIndex + 5;
+      if(updatedIndex >= questionCount){
+        updatedIndex = 0;
+      }
+      setStartIndex(updatedIndex);
+    }
+
+    const handleFilter = (e) => {
+       setOption(e);
+    }
+
+    const handlePrev = () => {
+      // if page is 1 then dont work
+      // else go back 5
+      if(currentPage != 1){
+        let updatedIndex = startIndex - 5;
+        setStartIndex(updatedIndex);
+      }
+    }
     
-    
+
     const questionCountText = questionCount === 1 ? "question" : "questions";
     return (
     <div className="questionBanner">
         <div className="leftSection">
-          <h1 id="allQuestionsText">{allQuestionsText}</h1>
+          <div id="allQuestionsText">{allQuestionsText}</div>
           <span className="questionCountText">{questionCount} {questionCountText}</span>
+        </div>
+        <div className="middleSection">
+          {currentPage !== 1 ?
+          (<button id="themeButtonPrevOn" onClick={handlePrev}> Prev</button>)
+          :
+          (<button id="themeButtonPrevOff"> Prev</button>)}
+          <div className="themePageIndex">{currentPage} / {lastPage}</div>
+          <button id="themeButtonNext" onClick={handleNext}> Next</button>
         </div>
         <div className="rightSection">
           <button id="themeButtonAskQuestion" onClick={handleClick}> Ask Question</button>
