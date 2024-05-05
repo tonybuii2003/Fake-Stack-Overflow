@@ -20,9 +20,7 @@ export default function HomePage({setTryLogin, tryLogin, user}) {
       setCurrentSearchTag={setCurrentSearchTag} 
       showSearchBar={showSearchBar} 
       setShowSearchBar={setShowSearchBar}
-      setTryLogin={setTryLogin}
-      tryLogin={tryLogin}
-      user={user}
+      
       ></Banner>
           <SidebarNav 
             showQuestions={showQuestions} setShowQuestions={setShowQuestions} 
@@ -31,6 +29,8 @@ export default function HomePage({setTryLogin, tryLogin, user}) {
             currentSearchQuery={currentSearchQuery} setCurrentSearchQuery={setCurrentSearchQuery}
             currentSearchTag={currentSearchTag} setCurrentSearchTag={setCurrentSearchTag}
             onSubmitSearch={onSubmitSearch} setOnSubmitSearch={setOnSubmitSearch}
+            setTryLogin={setTryLogin}
+            tryLogin={tryLogin}
             user={user}/>
     </section>
   );
