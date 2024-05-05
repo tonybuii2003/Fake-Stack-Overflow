@@ -1,9 +1,8 @@
 import React from "react";
 import '../stylesheets/Banner.css';
 import '../stylesheets/SearchBar.css';
-import axios from "axios";
 
-axios.defaults.withCredentials = true;
+
 function Banner({setCurrentSearchQuery, setShowSearchResults, onSubmitSearch, setOnSubmitSearch, setCurrentSearchTag, showSearchBar, setShowSearchBar }){
     
     const onSearch = (event) => {

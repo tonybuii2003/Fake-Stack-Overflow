@@ -119,9 +119,7 @@ function SideNavBar({showQuestions, setShowQuestions,
                 onClick={handleClickTagsBtn}>
                     Tags
                 </button>
-                {/* divider */}
                 <hr className="divider"/>
-                {/* welcome message */}
                 <span className="welcomeMessage">Welcome, {user.username}!</span>
                 {user.isLoggedIn && (
                 <button onClick={handleLogout} className="logoutButton">Logout</button>
