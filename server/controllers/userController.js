@@ -31,7 +31,10 @@ const loginUser = async (req, res) => {
             return res.status(401).send('Invalid credentials');
         }
         const token = jwt.sign(
-            { userId: user._id },
+            { userId: user._id,
+            email: user.email, 
+            first_name: user.first_name,
+            },
             process.env.JWT_SECRET,
         );
         res.cookie('token', token, {
@@ -74,7 +77,9 @@ const getLoggedIn = async (req, res) => {
             }
 
             console.log('JWT verified successfully, user:', user);
-            return res.json({ isLoggedIn: true });
+            return res.json({ isLoggedIn: true, user:{
+                email: user.email
+            }});
         });
     } catch (error) {
         console.error('Error getting logged in user:', error);

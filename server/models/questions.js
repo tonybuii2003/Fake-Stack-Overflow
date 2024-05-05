@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
-    title: { type: String, required: true, maxlength: 100 },
+    title: { type: String, required: true, maxlength: 50 },
+    summary: { type: String, required: true, maxlength: 140 },
     text: { type: String, required: true },
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag', required: true }],
     answers: [{ type: Schema.Types.ObjectId, ref: 'Answer' }],

@@ -1,6 +1,5 @@
 const Question = require('../models/questions');
 const Tag = require('../models/tags');
-const Answer = require('../models/answers');
 
 async function getQuestions(req, res) {
     try {
@@ -27,7 +26,7 @@ async function getQuestionByID(req, res) {
 }
 
 async function postQuestion(req, res) {
-    const { title, text, tags, asked_by } = req.body;
+    const { title, summary, text, tags, asked_by } = req.body;
     try {
         const tagIds = await Promise.all(tags.map(async (tagName) => {
             let tag = await Tag.findOne({ name: tagName });
@@ -41,6 +40,7 @@ async function postQuestion(req, res) {
 
         const question = new Question({
             title,
+            summary,
             text,
             tags: tagIds,
             asked_by
@@ -67,6 +67,7 @@ async function incrementQuestionView(req, res) {
         res.status(200).json(question);
     } catch (error) {
         res.status(500).json({ message: error.message });
+        console.error('Error incrementing question view:', error);
     }
 }
 
