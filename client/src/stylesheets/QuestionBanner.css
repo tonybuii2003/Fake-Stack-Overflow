@@ -15,6 +15,10 @@
     font-size: 30px; 
     font-family: sans-serif; 
 }
+.middleSection {
+    display: flex;
+    flex-direction: row;
+}
 .rightSection {
     display: flex; 
     flex-direction: column; 
@@ -35,4 +39,22 @@
     font-size: 24px; 
     color: #000000; 
     font-family: sans-serif;    
+}
+
+#allQuestionsText {
+    font-weight: bold;
+    font-size: 28px;
+    color: #000000;
+    font-family: sans-serif;
+    margin: 0px 0px;  
+}
+
+.themePageIndex {
+  /* background-color: #c5c5c5;
+  color: black;  */
+  padding: 12px 15px; 
+  font-family: sans-serif;
+  font-weight: bold;
+  /* border: 2px solid #000000;  */
+  font-size: 20px; 
 }

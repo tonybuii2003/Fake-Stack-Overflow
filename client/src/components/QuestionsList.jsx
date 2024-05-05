@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import '../stylesheets/QuestionsList.css';
 import {displayQuestionDate} from '../utils/displayDate';
-function QuestionsList({questions, tags, setAllTags, showQuestionAndAnswersFunc, setCurrentQID, option, setAllQuestions, currentSearchQuery, onSubmitSearch, setSavedDisplayedQuestionCount}) {
+function QuestionsList({questions, tags, setAllTags, showQuestionAndAnswersFunc, setCurrentQID, option, setAllQuestions, currentSearchQuery, onSubmitSearch, setSavedDisplayedQuestionCount, startIndex, setStartIndex}) {
   const questionMatchesSearchQuery = (question, keywords, queryTags) => {
     // Try to match by tags
     for(const tag of queryTags){
@@ -86,27 +86,36 @@ function QuestionsList({questions, tags, setAllTags, showQuestionAndAnswersFunc,
   };
   useEffect(() => {
     let processedQuestions = questions;
+    let endIndex = startIndex + 5;
+    processedQuestions = processedQuestions.slice(startIndex, endIndex);
     setAllQuestions(processedQuestions);
     setAllTags(tags);
 
   }, [option,  onSubmitSearch]); 
   console.log(option);
+  let end = startIndex + 5;
   switch (option) {
     case 'newest':
       questions = sortQuestionsByNewest(questions);
+      questions = questions.slice(startIndex, end);
       break;
     case 'unanswered':
+      setStartIndex(0);
       questions = filterUnansweredQuestions(questions);
+      questions = questions.slice(startIndex, end);
       break;
     case 'active':
       questions = sortQuestionsByActive(questions);
+      questions = questions.slice(startIndex, end);
       break;
     case 'search':
       questions = sortQuestionsBySearch();
+      questions = questions.slice(startIndex, end);
       break;
     default:
       break;
   }
+  console.log(questions.length);
   if (questions.length === 0) {
     return (
         <h1 className="noQuestionsFound">No Questions Found</h1>

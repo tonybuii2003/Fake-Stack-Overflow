@@ -5,6 +5,7 @@ import QuestionList from './QuestionsList';
 import axios from 'axios';
 function Questions({showQuestionFormFunc, showQuestionAndAnswersFunc, setCurrentQID, showSearchResults, option, setOption, currentSearchQuery, currentSearchTag, onSubmitSearch}) {
   const [allQuestions, setAllQuestions] = useState([]); 
+  const [startIndex, setStartIndex] = useState(0);
   const [savedDisplayedQuestionCount, setSavedDisplayedQuestionCount] = useState(0); 
   const [allTags, setAllTags] = useState([]); 
   useEffect(() => {
@@ -41,6 +42,8 @@ function Questions({showQuestionFormFunc, showQuestionAndAnswersFunc, setCurrent
         onSubmitSearch={onSubmitSearch}
         setAllQuestions={setAllQuestions}
         savedDisplayedQuestionCount={savedDisplayedQuestionCount}
+        startIndex={startIndex}
+        setStartIndex={setStartIndex}
         />
       <QuestionList questions={allQuestions}
                     tags={allTags} 
@@ -51,7 +54,9 @@ function Questions({showQuestionFormFunc, showQuestionAndAnswersFunc, setCurrent
                     setAllQuestions = {setAllQuestions}
                     currentSearchQuery={currentSearchQuery}
                     onSubmitSearch={onSubmitSearch}
-                    setSavedDisplayedQuestionCount={setSavedDisplayedQuestionCount}/>
+                    setSavedDisplayedQuestionCount={setSavedDisplayedQuestionCount}
+                    startIndex={startIndex}
+                    setStartIndex={setStartIndex}/>
       
     </div>
     
