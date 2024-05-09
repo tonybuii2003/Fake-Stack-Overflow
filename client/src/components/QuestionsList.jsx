@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import '../stylesheets/QuestionsList.css';
 import { displayQuestionDate } from '../utils/displayDate';
 
-function QuestionsList({ questions, tags, showQuestionAndAnswersFunc, setCurrentQID, option, currentSearchQuery, setSavedDisplayedQuestionCount }) {
+function QuestionsList({ questions, tags, showQuestionAndAnswersFunc, setCurrentQID, option, currentSearchQuery, setSavedDisplayedQuestionCount, currentPage, setCurrentPage, currentTotalPages, setCurrentTotalPages}) {
     const [filteredQuestions, setFilteredQuestions] = useState([]);
+
     const sortQuestionsByNewest = (questions) => {
       return [...questions].sort((a, b) => new Date(b.ask_date_time) - new Date(a.ask_date_time));
     };
@@ -38,7 +39,12 @@ function QuestionsList({ questions, tags, showQuestionAndAnswersFunc, setCurrent
     useEffect(() => {
         let processedQuestions = sortAndFilterQuestions(questions, option, currentSearchQuery, tags);
         setFilteredQuestions(processedQuestions);
-        console.log("filtered questions: ", processedQuestions);
+
+        console.log("Filtered questions: ", processedQuestions);
+        setCurrentPage(0);
+        const lastPage = Math.ceil(processedQuestions.length / 5);
+        setCurrentTotalPages(lastPage);
+
         setSavedDisplayedQuestionCount(processedQuestions.length);
     }, [questions, option, currentSearchQuery, tags, setSavedDisplayedQuestionCount]);
 
@@ -49,11 +55,10 @@ function QuestionsList({ questions, tags, showQuestionAndAnswersFunc, setCurrent
         if (searchQuery && searchQuery !== 'null') {
             result = filterBySearchQuery(result, searchQuery, tags);
         }
-
         // Then sort by the selected option
         switch (option) {
             case 'newest':
-                return sortQuestionsByNewest(result)
+                return sortQuestionsByNewest(result);
             case 'unanswered':
                 return filterUnansweredQuestions(result);
             case 'active':
@@ -104,7 +109,7 @@ function QuestionsList({ questions, tags, showQuestionAndAnswersFunc, setCurrent
                     </div>
                     <div className="question-meta">
                         <span style={{color: "red"}}>{question.asked_by}</span>
-                        <span style={{color: "grey"}}> asked {displayQuestionDate(question.ask_date_time)}</span>
+                        <span style={{color: "greynp"}}> asked {displayQuestionDate(question.ask_date_time)}</span>
                     </div>
                 </div>
             ))}

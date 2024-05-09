@@ -23,7 +23,7 @@ function App() {
           console.log('User is logged in:', response.data.user.email);
         }
       } catch (error) {
-        setUser({ isLoggedIn: false, username: "Guest" });
+        setUser({ isLoggedIn: false, username: "Guest", isGuest: true});
         console.error('Failed to verify login status:', error);
       }
     };
@@ -34,8 +34,7 @@ function App() {
     
       <Router>
         <Routes>
-          <Route path="/" element={user.isLoggedIn ? <HomePage setTryLogin={setTryLogin} tryLogin={tryLogin} user={user} /> : <WelcomePage setTryLogin={setTryLogin} tryLogin={tryLogin} isLoggedIn={user.isLoggedIn}/>} />
-          {/* <Route path="/" element={<HomePage setTryLogin={setTryLogin} tryLogin={tryLogin} user={user} />} /> */}
+          <Route path="/" element={user.isLoggedIn ? <HomePage setTryLogin={setTryLogin} tryLogin={tryLogin} user={user} /> : <WelcomePage setTryLogin={setTryLogin} tryLogin={tryLogin} user={user}/>} />
         </Routes>
       </Router>
    

@@ -164,7 +164,12 @@ function SideNavBar({showQuestions, setShowQuestions,
                     Profile
                 </button>
                 <hr className="divider"/>
-                <span className="welcomeMessage">Welcome, {user.username}!</span>
+                {user.isGuest && (
+                    <span className="welcomeMessage">Welcome, Guest!</span>
+                )}
+                {!user.isGuest && (
+                    <span className="welcomeMessage">Welcome, {user.username}!</span>
+                )}
                 {user.isLoggedIn && (
                 <button onClick={handleLogout} className="logoutButton">Logout</button>
             )}
@@ -180,6 +185,7 @@ function SideNavBar({showQuestions, setShowQuestions,
                 currentSearchQuery={currentSearchQuery}
                 currentSearchTag={currentSearchTag}
                 onSubmitSearch={onSubmitSearch}
+                user={user}
                 />}
             {questionFormOpened && <QuestionForm showQuestionsFunc = {showQuestionsFunc} user={user}/> }
             {showQuestionAndAnswers && <QuestionAndAnswers 
@@ -204,6 +210,7 @@ function SideNavBar({showQuestions, setShowQuestions,
                 setCurrentSearchQuery={setCurrentSearchQuery}
                 showQuestionsSearchFunc={showQuestionsSearchFunc}
                 setCurrentSearchTag={setCurrentSearchTag}
+                user={user}
                 />}
 
             {showProfile && <Profile showEditFormFunc={showEditFormFunc} setCurrentQID={setCurrentQID} userToken={user}/>}

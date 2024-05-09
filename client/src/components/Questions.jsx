@@ -3,9 +3,10 @@ import '../stylesheets/Questions.css';
 import QuestionBanner from './QuestionBanner';
 import QuestionList from './QuestionsList';
 import axios from 'axios';
-function Questions({showQuestionFormFunc, showQuestionAndAnswersFunc, setCurrentQID, showSearchResults, option, setOption, currentSearchQuery, currentSearchTag, onSubmitSearch}) {
+function Questions({showQuestionFormFunc, showQuestionAndAnswersFunc, setCurrentQID, showSearchResults, option, setOption, currentSearchQuery, currentSearchTag, onSubmitSearch, user}) {
   const [allQuestions, setAllQuestions] = useState([]); 
-  const [startIndex, setStartIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [currentTotalPages, setCurrentTotalPages] = useState(0);
   const [savedDisplayedQuestionCount, setSavedDisplayedQuestionCount] = useState(0); 
   const [allTags, setAllTags] = useState([]); 
   const [loading, setLoading] = useState(true);
@@ -48,8 +49,11 @@ function Questions({showQuestionFormFunc, showQuestionAndAnswersFunc, setCurrent
         onSubmitSearch={onSubmitSearch}
         setAllQuestions={setAllQuestions}
         savedDisplayedQuestionCount={savedDisplayedQuestionCount}
-        startIndex={startIndex}
-        setStartIndex={setStartIndex}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        currentTotalPages={currentTotalPages}
+        setCurrentTotalPages={setCurrentTotalPages}
+        user={user}
         />
       <QuestionList questions={allQuestions}
                     tags={allTags} 
@@ -61,9 +65,11 @@ function Questions({showQuestionFormFunc, showQuestionAndAnswersFunc, setCurrent
                     currentSearchQuery={currentSearchQuery}
                     onSubmitSearch={onSubmitSearch}
                     setSavedDisplayedQuestionCount={setSavedDisplayedQuestionCount}
-                    startIndex={startIndex}
-                    setStartIndex={setStartIndex}/>
-      
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    currentTotalPages={currentTotalPages}
+                    setCurrentTotalPages={setCurrentTotalPages}
+                    />
     </div>
     
   );

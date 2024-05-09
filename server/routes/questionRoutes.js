@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/authHandle');
 
 const { postQuestion, getQuestions, getQuestionByID, incrementQuestionView, getQuestionsByUsername, deleteQuestion, updateQuestion} = require('../controllers/questionController');
 
 router.get('/question', getQuestions)
 
-router.post('/question' , postQuestion);
+router.post('/question' , auth.verify, postQuestion);
 
 router.get('/question/:id', getQuestionByID)
 

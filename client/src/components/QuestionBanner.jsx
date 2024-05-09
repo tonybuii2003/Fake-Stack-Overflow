@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../stylesheets/QuestionBanner.css';
 
-function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showSearchResults, currentSearchTag, onSubmitSearch, setAllQuestions, savedDisplayedQuestionCount, startIndex, setStartIndex}) {
+function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showSearchResults, currentSearchTag, onSubmitSearch, setAllQuestions, savedDisplayedQuestionCount, currentPage, setCurrentPage, currentTotalPages, setCurrentTotalPages, user}) {
     let allQuestionsText;
     let questionCount;
+    console.log(user);
+    console.log(user.isGuest);
     if(showSearchResults){
       if(currentSearchTag !== undefined && currentSearchTag !== 'null'){
         allQuestionsText = "Showing questions tagged with [" + currentSearchTag + "]";
@@ -23,32 +25,22 @@ function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showS
         showQuestionFormFunc()
     }
 
-    const currentPage = Math.floor(startIndex / 5) + 1;
-    const lastPage = Math.ceil(questionCount / 5);
+    const handleDeny = (reason) => {
+        alert("You must be logged in to " + reason + "!\nPlease login or register first.");
+    }
 
-    const handleNext = () => {
-      // wrap around if > pagemax
-      let updatedIndex = startIndex + 5;
-      if(updatedIndex >= questionCount){
-        updatedIndex = 0;
+    const handlePages = (direction) => {
+      let newPage = currentPage;
+      if (direction === 'next') {
+        newPage = (newPage + 1) % currentTotalPages;
+      } 
+      else if (direction === 'prev') {
+        newPage = (newPage - 1 + currentTotalPages) % currentTotalPages;
       }
-      setStartIndex(updatedIndex);
+      //setCurrentPage(newPage);
     }
-
-    const handleFilter = (e) => {
-       setOption(e);
-    }
-
-    const handlePrev = () => {
-      // if page is 1 then dont work
-      // else go back 5
-      if(currentPage != 1){
-        let updatedIndex = startIndex - 5;
-        setStartIndex(updatedIndex);
-      }
-    }
-    
-
+    const userGuest = user.isGuest;
+    console.log("Userguest", userGuest);
     const questionCountText = questionCount === 1 ? "question" : "questions";
     return (
     <div className="questionBanner">
@@ -58,14 +50,19 @@ function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showS
         </div>
         <div className="middleSection">
           {currentPage !== 1 ?
-          (<button id="themeButtonPrevOn" onClick={handlePrev}> Prev</button>)
+          (<button id="themeButtonPrevOn" onClick={handlePages('prev')} > Prev</button>)
           :
           (<button id="themeButtonPrevOff"> Prev</button>)}
-          <div className="themePageIndex">{currentPage} / {lastPage}</div>
-          <button id="themeButtonNext" onClick={handleNext}> Next</button>
+          <div className="themePageIndex">{currentPage} / {currentTotalPages}</div>
+          <button id="themeButtonNext" onClick={handlePages('next')}> Next</button>
         </div>
         <div className="rightSection">
-          <button id="themeButtonAskQuestion" onClick={handleClick}> Ask Question</button>
+          {!userGuest ? 
+          (<button id="themeButtonAskQuestion" onClick={handleClick}> Ask Question</button>
+          ) 
+          : 
+          (<button id="themeButtonAskQuestionInactive" onClick={() => handleDeny("ask a question")}> Ask Question</button>
+          )}
           <div className="questionFilters">
             <button id="newestOption" className="filterButton" onClick={()=>setOption('newest')}>Newest</button>
             <button id="activeOption" className="filterButton" onClick={() => setOption('active')}>Active</button>
