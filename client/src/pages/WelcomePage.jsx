@@ -5,7 +5,7 @@ import UserRegisterForm from '../components/UserRegisterForm';
 import BannerStatic from '../components/BannerStatic';
 import HomePage from './HomePage';
 
-export default function WelcomePage({setTryLogin, tryLogin}) {
+export default function WelcomePage({setTryLogin, tryLogin, user}) {
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
   const [showGuest, setShowGuest] = useState(false);
@@ -50,7 +50,11 @@ export default function WelcomePage({setTryLogin, tryLogin}) {
         {showRegister && <UserRegisterForm
         switchSubpageFunc = {switchSubpageFunc}
         ></UserRegisterForm>}
-        {showGuest && <HomePage/>}
+        {showGuest && <HomePage
+        setTryLogin={setTryLogin}
+        tryLogin={tryLogin}
+        user={user}/>
+        }
       </section>
     </section>
   );

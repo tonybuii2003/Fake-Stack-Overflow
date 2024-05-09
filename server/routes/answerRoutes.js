@@ -4,14 +4,14 @@ const auth = require('../middleware/authHandle');
 const commentController = require('../controllers/commentController');
 const { getAnswers, createAnswer } = require('../controllers/answerController');
 
-router.get('/question/:id/answer', auth.verify, getAnswers)
+router.get('/question/:id/answer', getAnswers)
 
 router.post('/question/:id/answer', auth.verify, createAnswer)
 
 router.get('/answer/:answerId/comment', commentController.getComments);
 
-router.post('/answer/:answerId/comment', commentController.createComment);
+router.post('/answer/:answerId/comment', auth.verify, commentController.createComment);
 
-router.post('/comment/:commentId/upvote', commentController.upVoteComment);
+router.post('/comment/:commentId/upvote', auth.verify, commentController.upVoteComment);
 
 module.exports = router

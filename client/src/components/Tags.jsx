@@ -5,7 +5,7 @@ import '../stylesheets/TagsList.css';
 import TagBanner from './TagBanner';
 import TagsList from './TagsList';
 
-function Tags({setShowSearchResults, showQuestionFormFunc, setCurrentSearchQuery, showQuestionsSearchFunc, setCurrentSearchTag}) {
+function Tags({setShowSearchResults, showQuestionFormFunc, setCurrentSearchQuery, showQuestionsSearchFunc, setCurrentSearchTag, user}) {
     const [allTags, setAllTags] = useState([]); 
     const [allQuestions, setAllQuestions] = useState([]); 
     useEffect(() => {
@@ -34,6 +34,7 @@ function Tags({setShowSearchResults, showQuestionFormFunc, setCurrentSearchQuery
             <TagBanner 
           tags={allTags} 
           showQuestionFormFunc={showQuestionFormFunc}
+          user={user}
           />
         <TagsList tags={allTags} 
           questions={allQuestions}

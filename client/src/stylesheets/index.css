@@ -17,6 +17,16 @@ body {
   cursor: pointer;  
 }
 
+#themeButtonAskQuestionInactive, #themeButtonAnswerQuestionInactive {
+  background-color: #5a5a5a; 
+  color: white; 
+  opacity: 40%;
+  padding: 12px 15px; 
+  border: 2px solid #000000; 
+  font-size: 20px; 
+  cursor: pointer;
+}
+
 #themeButtonAskQuestion:hover,#themeButtonAskQuestionTag:hover, #themeButtonAskQuestionAnswer:hover, #themeButtonAnswerQuestion:hover {
   background-color: #0056b3; 
 }

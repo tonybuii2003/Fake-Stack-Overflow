@@ -10,7 +10,9 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
     const [comments, setComments] = useState({});
     const [commentPageInfo, setCommentPageInfo] = useState({});
 
-    
+    const handleDeny = (reason) => {
+        alert("You must be logged in to " + reason + "!\nPlease login or register first.");
+    }
     console.log('current ID:', qid);
     const fetchData = async () => {
         if (qid) {
@@ -178,6 +180,7 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
       if (!question) return <div id="loading">Loading...</div>;
       const viewCountText = question.views === 1 ? "view" : "views";
       const answerCountText = answers.length === 1 ? "answer" : "answers";
+      const userGuest = user.isGuest;
       return (
         <div className="questionAndAnswers">
             <div className="showQuestionsandAnswer"></div>
@@ -186,7 +189,12 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
                     <div className="s1">
                         <div className="question-stats">{question.answers.length} {answerCountText}</div>
                         <h3>{question.title}</h3>
-                        <button id="themeButtonAskQuestionAnswer" onClick={handleClickQuestion}>Ask Question</button>
+                        {!userGuest ? 
+          (<button id="themeButtonAskQuestion" onClick={handleClickQuestion}> Ask Question</button>
+          ) 
+          : 
+          (<button id="themeButtonAskQuestionInactive" onClick={() => handleDeny("ask a question")}> Ask Question</button>
+          )}
                     </div>
                     <div className="s2">
                         <div className="question-stats">
@@ -227,7 +235,12 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
                     <div className="noAnswers">No Answers Yet</div>
                 )}
             <div className="answer-question">
-                    <button id="themeButtonAnswerQuestion" onClick={handleClickAnswer}>Answer Question</button>
+                {!userGuest ? 
+          (<button id="themeButtonAnswerQuestion" onClick={handleClickAnswer}>Answer Question</button>
+          ) 
+          : 
+          (<button id="themeButtonAnswerQuestionInactive" onClick={() => handleDeny("answer a question")}> Answer Question</button>
+          )}
             </div>
         </div>
     );
