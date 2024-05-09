@@ -31,6 +31,9 @@ function App() {
 
     checkLoginStatus();
   }, [tryLogin]);
+  if(user.isLoggedIn){
+    document.title = "FakeStackOverflow - Where CSE316 Students Browse, Squint, & Cry Tears";
+  }
   return (
     
       <Router>

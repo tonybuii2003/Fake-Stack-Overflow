@@ -2,11 +2,13 @@
     display: flex; 
     justify-content: space-between; 
     padding: 40px; 
+    align-items: flex-start;
 }
 
 .leftSectionTags {
     display: flex; 
-    gap: 20px; /* 420px */
+    flex-direction: column;
+    gap: 40px; /* 420px */
 }
 
 .allTagsText {
@@ -14,12 +16,11 @@
     font-size: 28px;
     color: #000000;
     font-family: sans-serif;
-    margin: 0px 0px;
+    margin: 0px 0px;  
 }
 
 .tagCountText {
-    font-weight: bold;
-    font-size: 28px;
-    color: #000000;
+    font-size: 24px; 
+    color: #000000; 
     font-family: sans-serif;
 }
