@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/authHandle');
 
-const { postQuestion, getQuestions, getQuestionByID, incrementQuestionView, getQuestionsByUsername, deleteQuestion, updateQuestion} = require('../controllers/questionController');
+const { postQuestion, getQuestions, getQuestionByID, incrementQuestionView, getQuestionsByUsername, deleteQuestion, updateQuestion, upVoteQuestion, downVoteQuestion} = require('../controllers/questionController');
 
 router.get('/question', getQuestions)
 
@@ -17,4 +17,7 @@ router.get('/question/byuser/:username', getQuestionsByUsername);
 router.delete('/question/:id', deleteQuestion);
 
 router.put('/question/:id', updateQuestion);
+
+router.put('/question/:id/upvote', auth.verify, upVoteQuestion);
+router.put('/question/:id/downvote', auth.verify, downVoteQuestion);
 module.exports = router;

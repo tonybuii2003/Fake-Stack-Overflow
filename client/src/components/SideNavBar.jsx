@@ -185,6 +185,8 @@ function SideNavBar({showQuestions, setShowQuestions,
                 currentSearchQuery={currentSearchQuery}
                 currentSearchTag={currentSearchTag}
                 onSubmitSearch={onSubmitSearch}
+                setTryLogin = {setTryLogin}
+                tryLogin = {tryLogin}
                 user={user}
                 />}
             {questionFormOpened && <QuestionForm showQuestionsFunc = {showQuestionsFunc} user={user}/> }

@@ -41,7 +41,7 @@
     font-family: sans-serif;    
 }
 
-#allQuestionsText {
+h1 {
     font-weight: bold;
     font-size: 28px;
     color: #000000;
@@ -50,11 +50,8 @@
 }
 
 .themePageIndex {
-  /* background-color: #c5c5c5;
-  color: black;  */
   padding: 12px 15px; 
   font-family: sans-serif;
   font-weight: bold;
-  /* border: 2px solid #000000;  */
   font-size: 20px; 
 }

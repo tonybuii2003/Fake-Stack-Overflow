@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../stylesheets/Form.css';
 import axios from 'axios';
 function QuestionForm({showQuestionsFunc, user}) {
@@ -6,7 +6,22 @@ function QuestionForm({showQuestionsFunc, user}) {
   const [questionText, setQuestionText] = useState('');
   const [questionTags, setQuestionTags] = useState('');
   const [questionSummary, setQuestionSummary] = useState('');
-
+  const [allTags, setTags] = useState([]);
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/tag');
+        setTags(response.data.map(tag => tag.name.toLowerCase()));
+        const userData = await axios.get(`http://localhost:8000/user/${user.userId}`);
+        setUserData(userData.data);
+      } catch (error) {
+        console.error('Error fetching tags:', error);
+      }
+    };
+    fetchData();
+  }, []);
+ 
   const handleSubmit = (e) => {
     e.preventDefault(); 
     const hyperlinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
@@ -21,20 +36,26 @@ function QuestionForm({showQuestionsFunc, user}) {
       alert('There is an incorrectly formatted hyperlink in your text.');
       return;
     }
-
+    
     addNewQuestion(questionTitle, questionText, questionTags, user.username, questionSummary);
     console.log({ questionTitle });
   }
   
   const addNewQuestion = async (questionTitle, questionText, questionTags, username, questionSummary) => {
+    
     questionTitle = questionTitle.trim();
     questionText = questionText.trim();
     username = username.trim();
     questionTags = questionTags.trim();
     questionSummary = questionSummary.trim();
-    console.log('summary:', questionSummary);
+    
     const tags = Array.from(new Set(questionTags.split(/\s+/).filter(Boolean).map(tag => tag.toLowerCase())));
-
+    const newTags = tags.filter(tag => !allTags.includes(tag));
+    console.log("currnet user data and tag", userData.reputation, newTags, allTags)
+    if (newTags.length > 0 && userData.reputation < 50) {
+      alert('You must have at least 50 reputation points to create new tags.');
+      return;
+    }
     if (questionTitle.length > 50) {
       alert('The title must not exceed 50 characters.');
       return;

@@ -15,11 +15,11 @@ const bcrypt = require('bcrypt');
 const dbUrl = 'mongodb://127.0.0.1:27017/fake_so';
 
 // Import models
-const User = require('./models/User');
-const Question = require('./models/Question');
-const Answer = require('./models/Answer');
-const Comment = require('./models/Comment');
-const Tag = require('./models/Tag');
+const User = require('./models/users');
+const Question = require('./models/questions');
+const Answer = require('./models/answers');
+const Comment = require('./models/comments');
+const Tag = require('./models/tags');
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,

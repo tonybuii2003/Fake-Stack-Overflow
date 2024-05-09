@@ -2,6 +2,7 @@ const Question = require('../models/questions');
 const Tag = require('../models/tags');
 const Answer = require('../models/answers');
 const Comment = require('../models/comments');
+const User = require('../models/users');
 
 async function getQuestions(req, res) {
     try {
@@ -31,6 +32,7 @@ async function getQuestionByID(req, res) {
 
 async function postQuestion(req, res) {
     const { title, summary, text, tags, asked_by } = req.body;
+    
     try {
         const tagIds = await Promise.all(tags.map(async (tagName) => {
             let tag = await Tag.findOne({ name: tagName });
@@ -137,5 +139,70 @@ async function updateQuestion(req, res) {
         res.status(500).json({ message: error.message });
     }
 }
+async function upVoteQuestion(req, res) {
+    const questionId = req.params.id;
+    const voterId = req.user.userId; 
+    console.log('Voter ID:', voterId);
 
-module.exports = { getQuestions, getQuestionByID, postQuestion, incrementQuestionView, getQuestionsByUsername, deleteQuestion, updateQuestion};
+    try {
+        const voter = await User.findById(voterId);
+        console.log('Voter:', voter);
+        if (!voter || voter.reputation < 50) {
+            return res.status(403).json({ message: "Insufficient reputation to vote." });
+        }
+
+        const question = await Question.findById(questionId);
+        if (!question) {
+            return res.status(404).json({ message: "Question not found." });
+        }
+
+        // Update question votes
+        question.votes = (question.votes || 0) + 1;
+        await question.save();
+
+        // Update user reputation
+        const questionOwner = await User.findOne({ email: question.asked_by });
+        if (questionOwner) {
+            questionOwner.reputation += 5;
+            await questionOwner.save();
+        }
+
+        res.status(200).json({ message: "Vote added successfully." });
+    } catch (error) {
+        console.error('Voting error:', error);
+        res.status(500).json({ message: "Error processing vote." });
+    }
+}
+async function downVoteQuestion(req, res) {
+    const questionId = req.params.id;
+    const voterId = req.user.userId;
+
+    try {
+        const voter = await User.findById(voterId);
+        if (!voter || voter.reputation < 50) {
+            return res.status(403).json({ message: "Insufficient reputation to vote." });
+        }
+
+        const question = await Question.findById(questionId);
+        if (!question) {
+            return res.status(404).json({ message: "Question not found." });
+        }
+
+        // Update question votes
+        question.votes = (question.votes || 0) - 1;
+        await question.save();
+
+        // Update user reputation
+        const questionOwner = await  User.findOne({ email: question.asked_by });
+        if (questionOwner) {
+            questionOwner.reputation -= 10;
+            await questionOwner.save();
+        }
+
+        res.status(200).json({ message: "Vote subtracted successfully." });
+    } catch (error) {
+        console.error('Voting error:', error);
+        res.status(500).json({ message: "Error processing vote." });
+    }
+}
+module.exports = { getQuestions, getQuestionByID, postQuestion, incrementQuestionView, getQuestionsByUsername, deleteQuestion, updateQuestion, upVoteQuestion, downVoteQuestion};

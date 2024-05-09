@@ -148,7 +148,7 @@
   .comment-container {
     height: 60%;
   }
-  .upvote-button{
+  .upvote-button, .downvote-button{
 
     color: #686868; 
     cursor: pointer; 
@@ -157,7 +157,7 @@
     background-color: #f0f0f0;
     
   }
-  .upvote-button:hover{
+  .upvote-button:hover, .downvote-button:hover{
     color: #444444;
     background-color: #e8e8e8;
   }

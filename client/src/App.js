@@ -13,6 +13,7 @@ function App() {
   const [user, setUser] = useState({ isLoggedIn: false, username: "Guest", userId: null, isGuest: true});
   const [tryLogin, setTryLogin] = useState(false);
   useEffect(() => {
+    
     const checkLoginStatus = async () => {
       try {
         const response = await axios.get('http://localhost:8000/loggedIn', { withCredentials: true });

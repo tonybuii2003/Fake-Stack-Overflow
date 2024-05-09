@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import '../stylesheets/QuestionBanner.css';
 
 function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showSearchResults, currentSearchTag, questionCount, setQuestionCount, currentPage, totalPages, handlePages, user}) {
-    let allQuestionsText;
+    let allQuestionsText = "All Questions"
     console.log(user);
     console.log(user.isGuest);
     console.log('cureent page: ',currentPage);
@@ -37,25 +37,24 @@ function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showS
     return (
     <div className="questionBanner">
         <div className="leftSection">
-          <div id="allQuestionsText">{allQuestionsText}</div>
+          <h1 id="allQuestionsText">{allQuestionsText}</h1>
           <span className="questionCountText">{questionCount} {questionCountText}</span>
         </div>
-        <div className="middleSection">
-
-          <button id="themeButtonPrevOn" 
-                  disabled={currentPage === 0}
-                  onClick={() => handlePages('prev')}>
-              Prev
-          </button>
-          <div className="themePageIndex">{currentPage + 1} / {totalPages}</div>
-          <button id="themeButtonNext" 
-                  
-                  onClick={() => handlePages('next')}>
-              Next
-          </button>
-      
-           
-          </div>
+        {totalPages === 0 ? null : 
+          <div className="middleSection">
+            
+            <button id="themeButtonPrevOn" 
+                    disabled={currentPage === 0}
+                    onClick={() => handlePages('prev')}>
+                Prev
+            </button>
+            <div className="themePageIndex">{currentPage + 1} / {totalPages}</div>
+            <button id="themeButtonNext" 
+                    
+                    onClick={() => handlePages('next')}>
+                Next
+            </button>
+          </div>}
         <div className="rightSection">
           {!userGuest ? 
           (<button id="themeButtonAskQuestion" onClick={handleClick}> Ask Question</button>

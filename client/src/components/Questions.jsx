@@ -3,7 +3,7 @@ import '../stylesheets/Questions.css';
 import QuestionBanner from './QuestionBanner';
 import QuestionList from './QuestionsList';
 import axios from 'axios';
-function Questions({showQuestionFormFunc, showQuestionAndAnswersFunc, setCurrentQID, showSearchResults, option, setOption, currentSearchQuery, currentSearchTag, onSubmitSearch, user}) {
+function Questions({showQuestionFormFunc, showQuestionAndAnswersFunc, setCurrentQID, showSearchResults, option, setOption, currentSearchQuery, currentSearchTag, onSubmitSearch, user, setTryLogin, tryLogin}) {
   const [allQuestions, setAllQuestions] = useState([]); 
   const [allTags, setAllTags] = useState([]); 
   const [loading, setLoading] = useState(true);
@@ -152,16 +152,14 @@ function Questions({showQuestionFormFunc, showQuestionAndAnswersFunc, setCurrent
         user={user}
         />
       <QuestionList 
-                    filteredQuestions={filteredQuestions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)}
-                    tags={allTags} 
-                    setAllTags= {setAllTags}
-                    showQuestionAndAnswersFunc={showQuestionAndAnswersFunc}
-                    setCurrentQID = {setCurrentQID}
-                    option = {option}
-                    setAllQuestions = {setAllQuestions}
-                    currentSearchQuery={currentSearchQuery}
-                    onSubmitSearch={onSubmitSearch}
-                    />
+            filteredQuestions={filteredQuestions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)}
+            setFilteredQuestions = {setFilteredQuestions}
+            showQuestionAndAnswersFunc={showQuestionAndAnswersFunc}
+            setCurrentQID = {setCurrentQID}
+            userToken={user}
+            setTryLogin = {setTryLogin}
+            tryLogin = {tryLogin}
+            />
     </div>
     
   );

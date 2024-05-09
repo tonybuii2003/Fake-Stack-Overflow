@@ -36,7 +36,7 @@ const loginUser = async (req, res) => {
             { expiresIn: '1h' }
         );
         req.session.token = token;
-        req.session.user = { userId: user._id, email: user.email };
+        req.session.user = { userId: user._id, email: user.email, reputation: user.reputation };
         res.status(200).json({ message: 'Login successful', user: req.session.user });
         console.log('Session Data:', req.session);
     } catch (error) {
@@ -69,7 +69,7 @@ const getLoggedIn = async (req, res) => {
             return res.json({ isLoggedIn: true, user: {
                 userId: user.userId,
                 email: user.email,
-                first_name: user.first_name,
+                reputation: req.session.user.reputation
             }});
         });
     } catch (error) {
