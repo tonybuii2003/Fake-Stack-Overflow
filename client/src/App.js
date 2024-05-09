@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
 // import FakeStackOverflow from './components/fakestackoverflow.js'
 
 function App() {
-  const [user, setUser] = useState({ isLoggedIn: false, username: "Guest", userId: null});
+  const [user, setUser] = useState({ isLoggedIn: false, username: "Guest", userId: null, isGuest: true});
   const [tryLogin, setTryLogin] = useState(false);
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -19,7 +19,7 @@ function App() {
         console.log('Login status:', response.data.isLoggedIn);
         console.log('User data:', response.data.user);
         if (response.data.isLoggedIn) {
-          setUser({ isLoggedIn: true, username: response.data.user.email, userId: response.data.user.userId});
+          setUser({ isLoggedIn: true, username: response.data.user.email, userId: response.data.user.userId, isGuest: false});
           console.log('User is logged in:', response.data.user.email);
         }
       } catch (error) {
@@ -34,7 +34,7 @@ function App() {
     
       <Router>
         <Routes>
-          <Route path="/" element={user.isLoggedIn ? <HomePage setTryLogin={setTryLogin} tryLogin={tryLogin} user={user} /> : <WelcomePage setTryLogin={setTryLogin} tryLogin={tryLogin} user={user}/>} />
+          <Route path="/" element={user.isLoggedIn ? <HomePage setTryLogin={setTryLogin} tryLogin={tryLogin} user={user} /> : <WelcomePage setTryLogin={setTryLogin} tryLogin={tryLogin} user={user} isLoggedIn={user.isLoggedIn}/>} />
         </Routes>
       </Router>
    

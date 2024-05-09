@@ -46,7 +46,7 @@ const loginUser = async (req, res) => {
 }
 const logoutUser = async (req, res) => {
     try{
-        await res.clearCookie('token');
+        req.session.destroy();
         res.status(200).send({ message: 'Logged out successfully' });
     } catch (error){
         res.status(500).send('Error logging out user');

@@ -5,7 +5,7 @@ import UserRegisterForm from '../components/UserRegisterForm';
 import BannerStatic from '../components/BannerStatic';
 import HomePage from './HomePage';
 
-export default function WelcomePage({setTryLogin, tryLogin, user}) {
+export default function WelcomePage({setTryLogin, tryLogin, user, isLoggedIn}) {
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
   const [showGuest, setShowGuest] = useState(false);
