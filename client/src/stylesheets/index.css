@@ -24,7 +24,7 @@ body {
   padding: 12px 15px; 
   border: 2px solid #000000; 
   font-size: 20px; 
-  cursor: pointer;
+  cursor: not-allowed;
 }
 
 #themeButtonAskQuestion:hover,#themeButtonAskQuestionTag:hover, #themeButtonAskQuestionAnswer:hover, #themeButtonAnswerQuestion:hover {
@@ -46,6 +46,7 @@ body {
   padding: 6px 10px; 
   border: 2px solid #000000; 
   font-size: 16px;
+  cursor: not-allowed;
 }
 
 #themeButtonPrevOn:hover,#themeButtonNext:hover {
@@ -57,5 +58,6 @@ body {
   margin: 40px;
   font-family: sans-serif;
   font-size: 30px;
+  font-weight: bold;
   color: #000000;
 }

@@ -8,6 +8,9 @@ import TagsList from './TagsList';
 function Tags({setShowSearchResults, showQuestionFormFunc, setCurrentSearchQuery, showQuestionsSearchFunc, setCurrentSearchTag, user}) {
     const [allTags, setAllTags] = useState([]); 
     const [allQuestions, setAllQuestions] = useState([]); 
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const tagsPerPage = 5;
     useEffect(() => {
 
       const fetchTags = async () => {
@@ -29,14 +32,31 @@ function Tags({setShowSearchResults, showQuestionFormFunc, setCurrentSearchQuery
       fetchTags();
       fetchQuestions();
     }, []); 
+    useEffect(() => {
+      setTotalPages(Math.ceil(allTags.length / tagsPerPage));
+      setCurrentPage(currentPage);
+    }, [allTags]);
+    const handlePages = (direction) => {
+      setCurrentPage(prev => {
+          if (direction === 'next') {
+              return (prev + 1) % totalPages;
+          } else if (direction === 'prev') {
+              return (prev - 1 + totalPages) % totalPages;
+          }
+          return prev;
+      });
+    };
     return (
         <div className="tags">
             <TagBanner 
           tags={allTags} 
           showQuestionFormFunc={showQuestionFormFunc}
           user={user}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePages={handlePages}
           />
-        <TagsList tags={allTags} 
+        <TagsList tags={allTags.slice(currentPage * tagsPerPage, (currentPage + 1) * tagsPerPage)}
           questions={allQuestions}
           setShowSearchResults={setShowSearchResults}
           setCurrentSearchQuery={setCurrentSearchQuery}

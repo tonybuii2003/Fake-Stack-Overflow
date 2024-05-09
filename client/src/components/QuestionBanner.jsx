@@ -1,28 +1,30 @@
 import React, { useEffect } from 'react';
+import { useState } from 'react';
 import '../stylesheets/QuestionBanner.css';
 
 function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showSearchResults, currentSearchTag, questionCount, setQuestionCount, currentPage, totalPages, handlePages, user}) {
-    let allQuestionsText;
+    const [allQuestionsText, setAllQuestionsText] = useState("All Questions");
     console.log(user);
     console.log(user.isGuest);
     console.log('cureent page: ',currentPage);
     useEffect(() => {
       if (showSearchResults) {
           if (currentSearchTag !== undefined && currentSearchTag !== 'null') {
-              allQuestionsText = `Showing questions tagged with [${currentSearchTag}]`;
+              setAllQuestionsText(`Showing questions tagged with [${currentSearchTag}]`);
               const tag = tags.find(tag => tag.name === currentSearchTag);
               if (tag) {
                   setQuestionCount(questions.filter(question => question.tags.some(questionTag => questionTag.name === tag.name)).length);
               }
           } else {
-              allQuestionsText = "Search Results";
+              setAllQuestionsText("Search Results");
               setQuestionCount(questions.length);
           }
-      } else {
-          allQuestionsText = "All Questions";
+      } 
+      else {
+          setAllQuestionsText("All Questions");
           setQuestionCount(questions.length);
       }
-  }, [questions, tags, currentSearchTag, showSearchResults, setQuestionCount])
+  }, [questions, tags, currentSearchTag, showSearchResults, setQuestionCount, setAllQuestionsText])
     const handleClick = () => {
         showQuestionFormFunc()
     }

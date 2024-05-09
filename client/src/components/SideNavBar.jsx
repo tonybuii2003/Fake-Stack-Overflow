@@ -128,6 +128,10 @@ function SideNavBar({showQuestions, setShowQuestions,
         showProfileFunc();
         
     }
+    const handleLoginAsGuest = () => {
+        window.location.reload();
+        navigate('/');
+    }
     const handleLogout = async () => {
         try{
             console.log("Logging out...");
@@ -165,10 +169,13 @@ function SideNavBar({showQuestions, setShowQuestions,
                 </button>
                 <hr className="divider"/>
                 {user.isGuest && (
-                    <span className="welcomeMessage">Welcome, Guest!</span>
+                    <div className="guestHome">
+                        <span id="welcomeMessage">Welcome, Guest!</span>
+                        <button onClick={handleLoginAsGuest} className="loginButton">Login</button>
+                    </div>
                 )}
                 {!user.isGuest && (
-                    <span className="welcomeMessage">Welcome, {user.username}!</span>
+                    <p id="welcomeMessage">Welcome {user.username}!</p>
                 )}
                 {user.isLoggedIn && (
                 <button onClick={handleLogout} className="logoutButton">Logout</button>
@@ -213,7 +220,7 @@ function SideNavBar({showQuestions, setShowQuestions,
                 user={user}
                 />}
 
-            {showProfile && <Profile showEditFormFunc={showEditFormFunc} setCurrentQID={setCurrentQID} userToken={user}/>}
+            {showProfile && <Profile showEditFormFunc={showEditFormFunc} setCurrentQID={setCurrentQID} userToken={user} asGuest={user.isGuest}/>}
             
         </div>
     );

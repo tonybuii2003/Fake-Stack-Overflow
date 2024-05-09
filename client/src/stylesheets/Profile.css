@@ -3,13 +3,13 @@
     font-family: sans-serif;
     
 }
-.profile h1 {
+
+.profileText {
     font-weight: bold;
     font-size: 28px;
     color: #000000;
-    
-    
 }
+
 .contentWrapper {
     position: absolute;
     display: flex; 
@@ -28,6 +28,12 @@
     display: flex; 
     justify-content: space-between; 
     align-items: flex-start; 
-    padding: 10px; 
+    /* padding: 10px;  */
     border-bottom: 3px dotted #000000;
+    font-weight: bold;
+    font-size: 28px;
+    color: #000000;
+    font-family: sans-serif;
+    margin: 0px 0px;  
+    padding: 40px;
 }

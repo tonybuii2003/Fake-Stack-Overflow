@@ -30,3 +30,9 @@
 .sidebarNav button:hover {
     color: rgb(159, 170, 253)
 }
+
+#welcomeMessage {
+    font-size: 18px; 
+    color: #000000; 
+    font-family: sans-serif;    
+}

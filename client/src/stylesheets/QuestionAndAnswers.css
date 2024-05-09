@@ -71,7 +71,6 @@
 .comment {
   margin-top: 20px;
   border-top: 1px #777;
-  height: 270px;
 
 }
 .comment .comment-content {
@@ -121,13 +120,23 @@
     overflow-y: auto;
   }
   .answer-question {
-  
+    flex-direction: row;
+    display: flex;
     padding: 20px;
+  }
+  .comment-button-inactive {
+    color: #5a5a5a;
+    margin: 1.5%;
   }
   .comment-button {
     color: #007bff; 
     cursor: pointer; 
-    margin: 0.5%;
+    margin: 1.5%;
+  }
+  .comment-none {
+    margin: 1.5%;
+    font-size: 14px;
+    font-family: sans-serif;
   }
   .comment-button:hover {
     text-decoration: underline; 
@@ -144,9 +153,6 @@
     .comment-text {
         margin: 10px 0;
     }
-  }
-  .comment-container {
-    height: 60%;
   }
   .upvote-button{
 

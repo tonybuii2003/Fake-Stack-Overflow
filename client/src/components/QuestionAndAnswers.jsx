@@ -9,6 +9,9 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
     const [answers, setAnswers] = useState([]); 
     const [comments, setComments] = useState({});
     const [commentPageInfo, setCommentPageInfo] = useState({});
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const answersPerPage = 5;
 
     const handleDeny = (reason) => {
         alert("You must be logged in to " + reason + "!\nPlease login or register first.");
@@ -21,7 +24,9 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
                 const questionResponse = await axios.get(`http://localhost:8000/question/${qid}`);
                 setQuestion(questionResponse.data);
                 const answersResponse = await axios.get(`http://localhost:8000/question/${qid}/answer`);
+                console.log("fetchy:", answersResponse.data);
                 setAnswers(answersResponse.data);
+                //setCurrentPage(currentPage);
                 const newComments = {};
                 const newCommentPageInfo = {};
                 for (const answer of answersResponse.data) {
@@ -39,6 +44,10 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
     useEffect(() => {
         fetchData();
     }, [fetchData]);
+    useEffect(() => {
+        setTotalPages(Math.ceil(answers.length / answersPerPage));
+        setCurrentPage(currentPage);
+    }, [answers, answersPerPage]);
     
     console.log('Question and answers fetched:', question);
     const handleClickQuestion = () => {
@@ -91,6 +100,16 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
             }
         }));
     };
+    const handlePages = (direction) => {
+        if (direction === 'next') {
+            setCurrentPage((currentPage + 1) % totalPages);
+        } else if (direction === 'prev') {
+            setCurrentPage((currentPage - 1 + totalPages) % totalPages);
+        }
+        else {
+            setCurrentPage(currentPage);
+        }
+      };
     const handlePagination = (answerId, direction) => {
         setCommentPageInfo(prev => {
             const totalPages = Math.ceil((comments[answerId] || []).length / 3);
@@ -114,11 +133,16 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
       const renderComments = (answerId) => {
         const answerComments = comments[answerId] || [];
         const pageInfo = commentPageInfo[answerId] || { currentPage: 0, showNavigation: true, showCommentForm: false };
+        const guestMode = user.isGuest == true;
         console.log('page info:', pageInfo)
+
         if (answerComments.length === 0) {
             return <div>
-                No comments yet.
+                <p className="comment-none">This answer has no comments yet.</p>
+                {guestMode == false ? (
                 <h5 className="comment-button" onClick={() => toggleCommentForm(answerId)}>Add Comment</h5>
+                ) : (
+                <h5 className="comment-button-inactive">You must be logged in to add a comment!</h5>)}
                
                 {pageInfo.showCommentForm && <CommentForm answerId={answerId} setCommentPageInfo={setCommentPageInfo} user={user} fetchData={fetchData}/>}
                 </div>;
@@ -149,7 +173,10 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
 
                 </div>
             
+                {guestMode == false ? (
                 <h5 className="comment-button" onClick={() => toggleCommentForm(answerId)}>Add Comment</h5>
+                ) : (
+                <h5 className="comment-button-inactive">You must be logged in to add a comment!</h5>)}
                
                 {commentPageInfo[answerId].showCommentForm && <CommentForm answerId={answerId} setCommentPageInfo={setCommentPageInfo} user={user} fetchData={fetchData}/>}
                 {pageInfo.showNavigation && (
@@ -176,6 +203,7 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
       if (!question) return <div id="loading">Loading...</div>;
       const viewCountText = question.views === 1 ? "view" : "views";
       const answerCountText = answers.length === 1 ? "answer" : "answers";
+      const answerRender = answers.slice(currentPage * answersPerPage, (currentPage + 1) * answersPerPage)
       const userGuest = user.isGuest;
       return (
         <div className="questionAndAnswers">
@@ -210,7 +238,7 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
 
                 {answers.length > 0 ? (
                     <div className="answers-list">
-                        {answers.map((answer, index) => (
+                        {answerRender.map((answer, index) => (
                             <div key={answer._id || index} className="answer"> 
                             <div className="answer-row">
                                 <div className="answer-text">
@@ -237,6 +265,19 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
           : 
           (<button id="themeButtonAnswerQuestionInactive" onClick={() => handleDeny("answer a question")}> Answer Question</button>
           )}
+          <div className="navigation-button">
+                        <button 
+                            disabled={currentPage === 0}
+                            onClick={() => handlePages('prev')}
+                        >
+                            Prev
+                        </button>
+                        <button 
+                            onClick={() => handlePages('next')}
+                        >
+                            Next
+                        </button>
+                    </div>
             </div>
         </div>
     );
