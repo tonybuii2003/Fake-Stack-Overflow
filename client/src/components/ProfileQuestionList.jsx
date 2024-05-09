@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import '../stylesheets/QuestionsList.css';
 import { displayQuestionDate } from '../utils/displayDate';
 
@@ -16,10 +16,6 @@ function ProfileQuestionsList({ questions, setCurrentQID, showEditFormFunc}) {
         <div className="questionsList">
             {questions.map(question => (
                 <div className="question" key={question._id}>
-                    {/* <div className="question-stats-stack">
-                        <div className="question-stats">{question.answers.length} {question.answers.length === 1 ? "answer" : "answers"}</div>
-                        <div className="question-stats">{question.views} {question.views === 1 ? "view" : "views"}</div>
-                    </div> */}
                     <div className="question-title-stack">
                         <h3 className="questionLink" onClick={() => handleClick(question._id)}>{question.title}</h3>
                     </div>

@@ -1,26 +1,28 @@
 import React, { useEffect } from 'react';
 import '../stylesheets/QuestionBanner.css';
 
-function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showSearchResults, currentSearchTag, onSubmitSearch, setAllQuestions, savedDisplayedQuestionCount, currentPage, setCurrentPage, currentTotalPages, setCurrentTotalPages, user}) {
+function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showSearchResults, currentSearchTag, questionCount, setQuestionCount, currentPage, totalPages, handlePages, user}) {
     let allQuestionsText;
-    let questionCount;
     console.log(user);
     console.log(user.isGuest);
-    if(showSearchResults){
-      if(currentSearchTag !== undefined && currentSearchTag !== 'null'){
-        allQuestionsText = "Showing questions tagged with [" + currentSearchTag + "]";
-        const tag = tags.find(tag => tag.name === currentSearchTag);
-        questionCount = questions.filter(question => question.tags.some(questionTag => questionTag.name === tag.name)).length;
+    console.log('cureent page: ',currentPage);
+    useEffect(() => {
+      if (showSearchResults) {
+          if (currentSearchTag !== undefined && currentSearchTag !== 'null') {
+              allQuestionsText = `Showing questions tagged with [${currentSearchTag}]`;
+              const tag = tags.find(tag => tag.name === currentSearchTag);
+              if (tag) {
+                  setQuestionCount(questions.filter(question => question.tags.some(questionTag => questionTag.name === tag.name)).length);
+              }
+          } else {
+              allQuestionsText = "Search Results";
+              setQuestionCount(questions.length);
+          }
+      } else {
+          allQuestionsText = "All Questions";
+          setQuestionCount(questions.length);
       }
-      else {
-        allQuestionsText = "Search Results"
-        questionCount = savedDisplayedQuestionCount;
-      }
-    }
-    else {
-      allQuestionsText = "All Questions"
-      questionCount = questions.length;
-    }
+  }, [questions, tags, currentSearchTag, showSearchResults, setQuestionCount])
     const handleClick = () => {
         showQuestionFormFunc()
     }
@@ -29,16 +31,6 @@ function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showS
         alert("You must be logged in to " + reason + "!\nPlease login or register first.");
     }
 
-    const handlePages = (direction) => {
-      let newPage = currentPage;
-      if (direction === 'next') {
-        newPage = (newPage + 1) % currentTotalPages;
-      } 
-      else if (direction === 'prev') {
-        newPage = (newPage - 1 + currentTotalPages) % currentTotalPages;
-      }
-      //setCurrentPage(newPage);
-    }
     const userGuest = user.isGuest;
     console.log("Userguest", userGuest);
     const questionCountText = questionCount === 1 ? "question" : "questions";
@@ -49,13 +41,21 @@ function QuestionBanner({questions, tags, showQuestionFormFunc, setOption, showS
           <span className="questionCountText">{questionCount} {questionCountText}</span>
         </div>
         <div className="middleSection">
-          {currentPage !== 1 ?
-          (<button id="themeButtonPrevOn" onClick={handlePages('prev')} > Prev</button>)
-          :
-          (<button id="themeButtonPrevOff"> Prev</button>)}
-          <div className="themePageIndex">{currentPage} / {currentTotalPages}</div>
-          <button id="themeButtonNext" onClick={handlePages('next')}> Next</button>
-        </div>
+
+          <button id="themeButtonPrevOn" 
+                  disabled={currentPage === 0}
+                  onClick={() => handlePages('prev')}>
+              Prev
+          </button>
+          <div className="themePageIndex">{currentPage + 1} / {totalPages}</div>
+          <button id="themeButtonNext" 
+                  
+                  onClick={() => handlePages('next')}>
+              Next
+          </button>
+      
+           
+          </div>
         <div className="rightSection">
           {!userGuest ? 
           (<button id="themeButtonAskQuestion" onClick={handleClick}> Ask Question</button>

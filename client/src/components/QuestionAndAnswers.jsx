@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import '../stylesheets/QuestionAndAnswers.css';
 import { displayQuestionDate } from '../utils/displayDate';
 import CommentForm from './CommentForm';
@@ -14,7 +14,7 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
         alert("You must be logged in to " + reason + "!\nPlease login or register first.");
     }
     console.log('current ID:', qid);
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         if (qid) {
             try {
                 await axios.put(`http://localhost:8000/question/${qid}/view`);
@@ -35,12 +35,10 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
                 console.error('Error fetching data:', error);
             }
         }
-    };
-    useEffect(() => {
-        
-    
-        fetchData();
     }, [qid]);
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
     
     console.log('Question and answers fetched:', question);
     const handleClickQuestion = () => {
@@ -63,8 +61,6 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
       }
       const updateVotes = (commentId, newVotes) => {
         setComments(prevComments => {
-            // Assume prevComments is an object where each key is an answerId
-            // and each value is an array of comments for that answer.
             return Object.keys(prevComments).reduce((acc, key) => {
                 acc[key] = prevComments[key].map(comment => {
                     if (comment._id === commentId) {

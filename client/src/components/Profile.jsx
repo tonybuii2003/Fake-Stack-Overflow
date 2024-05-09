@@ -6,25 +6,22 @@ export default function Profile({showEditFormFunc, userToken, setCurrentQID}) {
     const [user, setUser] = useState(null);
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("not fetched yet");
-    const userId = userToken.userId;
+    
     useEffect(() => {
-        console.log("Effect running", userToken);
         console.log("Fatch please !");
         const fetchUserData = async () => {
-            const userData = await axios.get(`http://localhost:8000/user/${userId}`);
+            const userData = await axios.get(`http://localhost:8000/user/${userToken.userId}`);
             console.log("userData: ", userData.data);
             setUser(userData.data);
             const userQuestions = await axios.get(`http://localhost:8000/question/byuser/${userData.data.email}`);
             setQuestions(userQuestions.data);
             setLoading(false);
         };
-        fetchUserData();
-        setError("fetched");
-    }, []);
-    // console.log("User: ", user, userId);
+        if (userToken && userToken.userId) {
+            fetchUserData();
+        }
+    }, [userToken, userToken.userId]);
     if (loading) return <p id='loading'>Loading...</p>;
-    console.log("erreor: ", error)
     return (
         <div className='profile'>
             

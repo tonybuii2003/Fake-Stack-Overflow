@@ -11,6 +11,7 @@ const questionSchema = new Schema({
     asked_by: { type: String, default: 'Anonymous' },
     ask_date_time: { type: Date, default: Date.now },
     views: { type: Number, default: 0 },
+    votes: { type: Number, default: 0 }
   });
   questionSchema.virtual('url').get(function () {
     return `posts/question/${this._id}`;
