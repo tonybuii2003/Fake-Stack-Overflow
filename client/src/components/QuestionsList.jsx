@@ -16,7 +16,6 @@ function QuestionsList({ questions, tags, showQuestionAndAnswersFunc, setCurrent
         const aHasAnswers = a.answers.length > 0;
         const bHasAnswers = b.answers.length > 0;
         
-        // Prioritize questions with answers over those without
         if (!aHasAnswers && bHasAnswers) {
             return 1;  // b should come before a
         }
@@ -100,6 +99,7 @@ function QuestionsList({ questions, tags, showQuestionAndAnswersFunc, setCurrent
                     </div>
                     <div className="question-title-stack">
                         <h3 className="questionLink" onClick={() => handleClick(question._id)}>{question.title}</h3>
+                        <p className="question-summary">{question.summary}</p>
                         <div className="question-tags">{question.tags.map(tag => <span className="tag" key={tag._id}>{tag.name}</span>)}</div>
                     </div>
                     <div className="question-meta">

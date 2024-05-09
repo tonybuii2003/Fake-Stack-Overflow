@@ -5,21 +5,27 @@ import Questions from '../components/Questions';
 import QuestionForm from './QuestionForm';
 import QuestionAndAnswers from './QuestionAndAnswers';
 import AnswerForm from './AnswerForm';
+import Profile from './Profile';
+import QuestionEditForm from './QuestionEditForm';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 axios.defaults.withCredentials = true;
 function SideNavBar({showQuestions, setShowQuestions, 
-    showTags, setShowTags, showSearchResults, 
-    setShowSearchResults, currentSearchQuery, 
+    showTags, setShowTags, 
+    showProfile, setShowProfile,
+    showSearchResults, setShowSearchResults, 
+    currentSearchQuery, 
     setCurrentSearchQuery, currentSearchTag, 
     setCurrentSearchTag, onSubmitSearch, isLoggedInOrGuest, setTryLogin, tryLogin, user}) {
     const [option, setOption] = useState('newest');
     const [questionFormOpened, setQuestionFormOpened] = useState(false);
     const [questionBackgroundColor, setQuestionBackgroundColor] = useState('#d2d2d2');
     const [tagsBackgroundColor, setTagsBackgroundColor] = useState('#ffffff');
+    const [profileBackgroundColor, setProfileBackgroundColor] = useState('#ffffff');
     const [showQuestionAndAnswers, setQuestionAndAnswers] = useState(false);
     const [showAnswerForm, setShowAnswerForm] = useState(false);
     const [currentQID, setCurrentQID] = useState('null');
+    const [showEditForm, setShowEditForm] = useState(false);
     const navigate = useNavigate();
     console.log("current user: ", user);
     useEffect(() => {
@@ -33,8 +39,11 @@ function SideNavBar({showQuestions, setShowQuestions,
         setQuestionFormOpened(false);
         setQuestionBackgroundColor('#d2d2d2');
         setTagsBackgroundColor('#ffffff');
+        setProfileBackgroundColor('#ffffff');
         setQuestionAndAnswers(false);
         setShowAnswerForm(false);
+        setShowProfile(false);
+        setShowEditForm(false);
     }
     function showTagsFunc() {
         setShowTags(true);
@@ -44,9 +53,12 @@ function SideNavBar({showQuestions, setShowQuestions,
         setCurrentSearchQuery('null');
         setQuestionFormOpened(false);
         setQuestionBackgroundColor('#ffffff');
+        setProfileBackgroundColor('#ffffff');
         setTagsBackgroundColor('#d2d2d2');
         setQuestionAndAnswers(false);
         setShowAnswerForm(false);
+        setShowProfile(false);
+        setShowEditForm(false);
     }
     function showQuestionsSearchFunc(){
         setShowTags(false);
@@ -55,6 +67,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setQuestionFormOpened(false);
         setQuestionAndAnswers(false);
         setShowAnswerForm(false);
+        setShowEditForm(false);
     }
     function showQuestionFormFunc() {
         setShowQuestions(false);
@@ -64,6 +77,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setQuestionFormOpened(true);
         setQuestionAndAnswers(false);
         setShowAnswerForm(false);
+        setShowEditForm(false);
     }
     function showAnswerFormFunc() {
         setShowAnswerForm(true);
@@ -71,6 +85,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setQuestionAndAnswers(false);
         setQuestionFormOpened(false);
         setShowQuestions(false);
+        setShowEditForm(false);
     }
     function showQuestionAndAnswersFunc() {
         setQuestionAndAnswers(true);
@@ -78,8 +93,28 @@ function SideNavBar({showQuestions, setShowQuestions,
         setQuestionFormOpened(false);
         setShowQuestions(false);
         setShowAnswerForm(false);
+        setShowEditForm(false);
     }
-
+    function showProfileFunc() {
+        setShowProfile(true);
+        setShowTags(false);
+        setQuestionFormOpened(false);
+        setShowQuestions(false);
+        setShowAnswerForm(false);
+        setProfileBackgroundColor('#d2d2d2');
+        setQuestionBackgroundColor('#ffffff');
+        setTagsBackgroundColor('#ffffff');
+        setShowEditForm(false);
+        setQuestionAndAnswers(false);
+    }
+    function showEditFormFunc() {
+        setShowEditForm(true);
+        setShowTags(false);
+        setQuestionFormOpened(false);
+        setShowQuestions(false);
+        setShowAnswerForm(false);
+        setShowProfile(false);
+    }
     const handleClickTagsBtn = () => {
         setOption('newest');
         showTagsFunc()
@@ -89,6 +124,10 @@ function SideNavBar({showQuestions, setShowQuestions,
         showQuestionsFunc()
         console.log("showQuestions: ", showQuestions);
     };
+    const handleClickProfileBtn = () => {
+        showProfileFunc();
+        
+    }
     const handleLogout = async () => {
         try{
             console.log("Logging out...");
@@ -119,6 +158,11 @@ function SideNavBar({showQuestions, setShowQuestions,
                 onClick={handleClickTagsBtn}>
                     Tags
                 </button>
+                <button id="buttonProfile" className="buttonTags"
+                style={{backgroundColor: profileBackgroundColor}}
+                onClick={handleClickProfileBtn}>
+                    Profile
+                </button>
                 <hr className="divider"/>
                 <span className="welcomeMessage">Welcome, {user.username}!</span>
                 {user.isLoggedIn && (
@@ -146,7 +190,13 @@ function SideNavBar({showQuestions, setShowQuestions,
             {showAnswerForm && <AnswerForm 
                                 qid = {currentQID} 
                                 showQuestionAndAnswersFunc = {showQuestionAndAnswersFunc} user={user}/>}
-            
+            {showEditForm && <QuestionEditForm
+                                questionId = {currentQID}
+                                showProfileFunc = {showProfileFunc}
+                                showEditFormFunc = {showEditFormFunc}
+                                
+                                user={user}
+                                />}
             {showTags &&
             <Tags
                 setShowSearchResults={setShowSearchResults}
@@ -155,6 +205,8 @@ function SideNavBar({showQuestions, setShowQuestions,
                 showQuestionsSearchFunc={showQuestionsSearchFunc}
                 setCurrentSearchTag={setCurrentSearchTag}
                 />}
+
+            {showProfile && <Profile showEditFormFunc={showEditFormFunc} setCurrentQID={setCurrentQID} userToken={user}/>}
             
         </div>
     );

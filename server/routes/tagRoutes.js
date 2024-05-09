@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const {getTags} = require('../controllers/tagController');
+const tagController = require('../controllers/tagController');
 
-router.get('/tag', getTags)
+router.get('/tag', tagController.getTags)
+router.get('/tag/:tagId', tagController.getTagById);
 
 // router.post('/tag' , postQuestion);
 

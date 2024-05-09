@@ -8,28 +8,34 @@ function Questions({showQuestionFormFunc, showQuestionAndAnswersFunc, setCurrent
   const [startIndex, setStartIndex] = useState(0);
   const [savedDisplayedQuestionCount, setSavedDisplayedQuestionCount] = useState(0); 
   const [allTags, setAllTags] = useState([]); 
+  const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
-    
-    const fetchTags = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/tag');
-        setAllTags(response.data);
-      } catch (error) {
-        console.error('Error fetching tags:', error);
-      }
-    };
-    const fetchQuestions = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/question');
-        setAllQuestions(response.data);
-      } catch (error) {
-        console.error('Error fetching questions:', error);
-      }
-    };
-    fetchTags();
-    fetchQuestions();
-  }, []); 
+    const fetchData = async () => {
+      const fetchTags = async () => {
+        try {
+          const response = await axios.get('http://localhost:8000/tag');
+          setAllTags(response.data);
+        } catch (error) {
+          console.error('Error fetching tags:', error);
+        }
+      };
+      const fetchQuestions = async () => {
+        try {
+          const response = await axios.get('http://localhost:8000/question');
+          setAllQuestions(response.data);
+        } catch (error) {
+          console.error('Error fetching questions:', error);
+        }
+      };
+      fetchTags();
+      fetchQuestions();
+    }
 
+    fetchData();
+    setLoading(false);
+  }, []); 
+  if (loading) return <p id='loading'>Loading...</p>;
   return (
     <div className="questions">
       <QuestionBanner 

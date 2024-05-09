@@ -31,21 +31,14 @@ const loginUser = async (req, res) => {
             return res.status(401).send('Invalid credentials');
         }
         const token = jwt.sign(
-            { userId: user._id,
-            email: user.email, 
-            first_name: user.first_name,
-            },
+            { userId: user._id, email: user.email },
             process.env.JWT_SECRET,
+            { expiresIn: '1h' }
         );
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: false, 
-            maxAge: 3600000 
-        });
-        res.status(200).json({ message: 'Login successful', token});
-        console.log('Login successful', token);
-        //print cookies token
-        console.log('Cookies: ', req.cookies);
+        req.session.token = token;
+        req.session.user = { userId: user._id, email: user.email };
+        res.status(200).json({ message: 'Login successful', user: req.session.user });
+        console.log('Session Data:', req.session);
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).send('Error logging in user');
@@ -61,24 +54,22 @@ const logoutUser = async (req, res) => {
 }
 const getLoggedIn = async (req, res) => {
     try {
-        // Log incoming cookies to see if the token is being sent correctly
-        console.log('Cookies received:', req.cookies);
-
-        const token = req.cookies.token;
-        if (!token) {
-            console.log('No token found');
+        if (!req.session.token) {
+            console.log('No token found in session');
             return res.json({ isLoggedIn: false });
         }
 
-        jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        jwt.verify(req.session.token, process.env.JWT_SECRET, (err, user) => {
             if (err) {
                 console.log('JWT verification error:', err);
                 return res.json({ isLoggedIn: false });
             }
 
             console.log('JWT verified successfully, user:', user);
-            return res.json({ isLoggedIn: true, user:{
-                email: user.email
+            return res.json({ isLoggedIn: true, user: {
+                userId: user.userId,
+                email: user.email,
+                first_name: user.first_name,
             }});
         });
     } catch (error) {
@@ -86,5 +77,17 @@ const getLoggedIn = async (req, res) => {
         res.status(500).send('Error getting logged in user');
     }
 }
+const getUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
-module.exports = { registerUser, loginUser, logoutUser, getLoggedIn};
+
+module.exports = { registerUser, loginUser, logoutUser, getLoggedIn, getUserById};

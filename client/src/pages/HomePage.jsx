@@ -11,6 +11,7 @@ export default function HomePage({setTryLogin, tryLogin, user}) {
   const [currentSearchTag, setCurrentSearchTag] = useState('null');
   const [showTags, setShowTags] = useState(false);
   const [onSubmitSearch, setOnSubmitSearch] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   return (
     <section>
       <Banner 
@@ -25,6 +26,7 @@ export default function HomePage({setTryLogin, tryLogin, user}) {
           <SidebarNav 
             showQuestions={showQuestions} setShowQuestions={setShowQuestions} 
             showTags={showTags} setShowTags={setShowTags}
+            showProfile={showProfile} setShowProfile={setShowProfile}
             showSearchResults={showSearchResults} setShowSearchResults={setShowSearchResults}
             currentSearchQuery={currentSearchQuery} setCurrentSearchQuery={setCurrentSearchQuery}
             currentSearchTag={currentSearchTag} setCurrentSearchTag={setCurrentSearchTag}

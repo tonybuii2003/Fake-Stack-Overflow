@@ -1,4 +1,3 @@
-const { model } = require('mongoose');
 const Answer = require('../models/answers');
 const Question = require('../models/questions');
 

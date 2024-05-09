@@ -6,7 +6,8 @@ const questionRouter = require("./routes/questionRoutes");
 const tagRouter = require("./routes/tagRoutes");
 const userRouter = require('./routes/userRoutes');
 const mongoose = require("mongoose");
-const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const port = 8000;
 const corsOptions = {
     origin: 'http://localhost:3000', 
@@ -19,13 +20,27 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use("/", answerRouter);
+
+app.use(session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: 'mongodb://127.0.0.1:27017/fake_so' }),
+    cookie: {
+        secure: false,
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000 
+    }
+}));
 app.use("/", questionRouter);
+app.use("/", answerRouter);
 app.use("/", tagRouter);
 app.use('/', userRouter);
 
-
+app.use((req, res, next) => {
+    console.log('Request Body:', req.body);
+    next();
+});
 const server = app.listen(port, () => console.log(`Server listening on port ${port}`));
 
 const shutdown = async () => {

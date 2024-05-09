@@ -8,7 +8,9 @@ const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     reputation: { type: Number, default: 0},
-    creation_date: { type: Date, default: Date.now }
+    creation_date: { type: Date, default: Date.now },
+    is_admin: { type: Boolean, default: false },
+    questions: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
   });
   userSchema.virtual('url').get(function () {
     return `posts/users/${this._id}`;

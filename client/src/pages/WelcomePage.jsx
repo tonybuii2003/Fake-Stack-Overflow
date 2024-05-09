@@ -5,10 +5,11 @@ import UserRegisterForm from '../components/UserRegisterForm';
 import BannerStatic from '../components/BannerStatic';
 import HomePage from './HomePage';
 
-export default function WelcomePage({setTryLogin, tryLogin}) {
+export default function WelcomePage({setTryLogin, tryLogin, isLoggedIn}) {
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
   const [showGuest, setShowGuest] = useState(false);
+
   if(showLogin){
     document.title = "Log in - FakeStackOverflow";
   }

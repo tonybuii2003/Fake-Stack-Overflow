@@ -38,4 +38,15 @@ async function getQuestionsByTag(req, res) {
 //         res.status(500).json({ message: error.message });
 //     }
 // }
-module.exports = { getTags, getQuestionsByTag};
+async function getTagById(req, res) {
+    try {
+        const tag = await Tag.findById(req.params.tagId);
+        if (!tag) {
+            return res.status(404).json({ message: 'Tag not found' });
+        }
+        res.status(200).json(tag);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+module.exports = { getTags, getQuestionsByTag, getTagById};

@@ -1,4 +1,4 @@
-.questionForm, .answerForm {
+.questionForm, .answerForm, .editquestionForm {
     display: flex;
     background-color: #f9f9f9; 
     padding: 20px; 
@@ -8,28 +8,29 @@
     justify-content: center;
     flex-grow: 1;
   }
-  .questionForm form, .answerForm form{
+  .questionForm form, .answerForm form, .editquestionForm form{
     margin: 0 auto; 
   }
-  .questionForm label, .answerForm label{
+  .questionForm label, .answerForm label, .editquestionForm label{
     display: block; 
     margin: 10px 0 5px; 
   }
   .questionForm input[type="text"], .questionForm textarea,
-  .answerForm input[type="text"], .answerForm textarea {
+  .answerForm input[type="text"], .answerForm textarea,
+  .editquestionForm input[type="text"], .editquestionForm textarea {
     width: 100%; 
     min-width: 700px;
     padding: 10px; 
     margin-bottom: 10px; 
     border: 1px solid #6c6c6c;
   }
-  .questionForm textarea, .answerForm textarea {
+  .questionForm textarea, .answerForm textarea, .editquestionForm textarea {
     height: 200px; 
   }
   #questionSummary{
     height: 100px; 
   }
-  .questionForm .post-box, .answerForm .post-box {
+  .questionForm .post-box, .answerForm .post-box, .editquestionForm .post-box {
     display: flex;
     justify-content: space-between;
     padding-top: 20px;
@@ -46,7 +47,7 @@
   .questionForm button:hover, .answerForm button:hover {
     background-color: #0056b3; 
   }
-  .questionForm .required-text, .answerForm .required-text {
+  .questionForm .required-text, .answerForm .required-text, .editquestionForm .required-text{
     color: red; 
     font-size: 15px;
     display: flex;
@@ -92,3 +93,29 @@
       width: 98%;
     }
   }  
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  .updateButton {
+    background-color: #007BFF; 
+    color: white; 
+    padding: 12px 15px; 
+    border: 2px solid #000000; 
+    font-size: 18px;
+    cursor: pointer; 
+  }
+  .updateButton:hover {
+    background-color: #0056b3; 
+  }
+  .deleteButton {
+    background-color: #ff0000;
+    color: white; 
+    padding: 12px 15px; 
+    border: 2px solid #000000; 
+    font-size: 18px;
+    cursor: pointer; 
+  }
+  .deleteButton:hover {
+    background-color: #b30000; 
+  }

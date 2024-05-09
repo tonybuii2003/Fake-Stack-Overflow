@@ -1,0 +1,33 @@
+.profile {
+    flex-grow: 1;  
+    font-family: sans-serif;
+    
+}
+.profile h1 {
+    font-weight: bold;
+    font-size: 28px;
+    color: #000000;
+    
+    
+}
+.contentWrapper {
+    position: absolute;
+    display: flex; 
+    height: 100vh; 
+    width: 100%; 
+}
+.profileSection {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border-bottom: 2px solid #ccc;
+   
+    padding: 40px;
+}
+.questionBannerProfile{
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+    padding: 10px; 
+    border-bottom: 3px dotted #000000;
+}
