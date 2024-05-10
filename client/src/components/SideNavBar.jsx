@@ -86,6 +86,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setShowAnswerForm(false);
         setShowEditForm(false);
         setShowTagEditForm(false);
+        setShowProfile(false);
     }
     function showQuestionFormFunc() {
         setShowQuestions(false);
@@ -97,6 +98,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setShowAnswerForm(false);
         setShowEditForm(false);
         setShowTagEditForm(false);
+        setShowProfile(false);
     }
     function showAnswerFormFunc() {
         setShowAnswerForm(true);
@@ -106,6 +108,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setShowQuestions(false);
         setShowEditForm(false);
         setShowTagEditForm(false);
+        setShowProfile(false);
     }
     function showQuestionAndAnswersFunc() {
         setQuestionAndAnswers(true);
