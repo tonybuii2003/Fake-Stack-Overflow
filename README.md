@@ -5,9 +5,9 @@ Add design docs in *images/*
 ## Instructions to setup and run project
 
 ## Tony Bui Contribution
-Login, Logout, Home Page, New Question, Answers
+Login, Logout, Home Page, New Question, Answers, Comments, UserProfile
 ## Team Member 2 Contribution
-
+Register, Guest, WelcomePage, Admin, Tags, Search, UserProfile
 
 
 
