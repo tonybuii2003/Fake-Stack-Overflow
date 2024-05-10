@@ -4,7 +4,6 @@ import ProfileQuestionsList from './ProfileQuestionList';
 import ProfileTagsList from './ProfileTagsList';
 import AnsweredQuestionsList from './AnsweredQuestionsList'
 import '../stylesheets/Profile.css';
-import User from '../'
 export default function Profile({showEditFormFunc, showTagEditFormFunc, showQuestionAndAnswersFunc, setCurrentTID, userToken, setCurrentQID, asGuest}) {
     const [user, setUser] = useState(null);
     const [questions, setQuestions] = useState([]);
@@ -66,7 +65,7 @@ export default function Profile({showEditFormFunc, showTagEditFormFunc, showQues
                         <ProfileTagsList tags={tags} showTagEditFormFunc={showTagEditFormFunc} setCurrentTID={setCurrentTID} />
                     </div>
                     <div className="questionBannerProfile">Questions Answered By You</div>
-                    <AnsweredQuestionsList showQuestionAndAnswersFunc ={showQuestionAndAnswersFunc} setCurrentQID={setCurrentQID} questions={questionAnswered}/>
+                    <AnsweredQuestionsList showQuestionAndAnswersFunc={showQuestionAndAnswersFunc} setCurrentQID={setCurrentQID} questions={questionAnswered}/>
                 </div>
             }
         </div>
