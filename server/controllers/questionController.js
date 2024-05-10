@@ -93,6 +93,7 @@ const getQuestionsByUsername = async (req, res) => {
 const getQuestionsByUserAnswer = async (req, res) => {
     try {
         const username = req.params.username;
+        console.log('Username:', username);
         const answers = await Answer.find({ ans_by: username });
         console.log('Answers:', answers);
         const questionIds = answers.map(answer => answer.questionId);

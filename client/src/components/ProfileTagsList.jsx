@@ -7,8 +7,8 @@ function ProfileTagsList({ tags, showTagEditFormFunc, setCurrentTID}) {
         //res.status(200).json({matches.length});
         console.log("Handling tid", tid);
         const amountUsed = await fetchTagUsageAmount(tid);
-        if(amountUsed != 0){
-            if(amountUsed == 1){
+        if(amountUsed !== 0){
+            if(amountUsed === 1){
                 alert(`1 other question still uses this tag!\nIt cannot be edited or deleted at this time.`);
             }
             else {

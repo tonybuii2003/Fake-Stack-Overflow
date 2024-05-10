@@ -17,7 +17,7 @@ function AnswerForm({qid, showQuestionAndAnswersFunc, user}) {
         alert('There is an incorrectly formatted hyperlink in your text.');
         return;
         }
-        addNewAnswer(answerText, user.username);
+        addNewAnswer(answerText, user.email);
     }
     const addNewAnswer = async (text, username) => {
         text = text.trim();

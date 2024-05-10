@@ -5,7 +5,7 @@ import ProfileTagsList from './ProfileTagsList';
 import AnsweredQuestionsList from './AnsweredQuestionsList'
 import '../stylesheets/Profile.css';
 import User from '../'
-export default function Profile({showEditFormFunc, userToken, setCurrentQID, asGuest}) {
+export default function Profile({showEditFormFunc, showTagEditFormFunc, showQuestionAndAnswersFunc, setCurrentTID, userToken, setCurrentQID, asGuest}) {
     const [user, setUser] = useState(null);
     const [questions, setQuestions] = useState([]);
     const [tags, setTags] = useState([]);

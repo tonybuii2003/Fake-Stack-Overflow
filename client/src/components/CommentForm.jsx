@@ -14,15 +14,15 @@ export default function CommentForm({ answerId, setCommentPageInfo, user, fetchD
             console.log('User:', user);
             await axios.post(`http://localhost:8000/answer/${answerId}/comment`, {
                 text: commentText,
-                commented_by: user.username
+                commented_by: user.email
             });
             setCommentText("");
             setCommentPageInfo(prev => ({
                 ...prev,
                 [answerId]: {
                     ...prev[answerId],
-                    showNavigation: true, // Show the navigation buttons again
-                    showCommentForm: false // Hide the comment form
+                    showNavigation: true, 
+                    showCommentForm: false 
                 }
             }));
             fetchData();

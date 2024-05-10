@@ -133,13 +133,13 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
       const renderComments = (answerId) => {
         const answerComments = comments[answerId] || [];
         const pageInfo = commentPageInfo[answerId] || { currentPage: 0, showNavigation: true, showCommentForm: false };
-        const guestMode = user.isGuest == true;
+        const guestMode = user.isGuest === true;
         console.log('page info:', pageInfo)
 
         if (answerComments.length === 0) {
             return <div>
                 <p className="comment-none">This answer has no comments yet.</p>
-                {guestMode == false ? (
+                {guestMode === false ? (
                 <h5 className="comment-button" onClick={() => toggleCommentForm(answerId)}>Add Comment</h5>
                 ) : (
                 <h5 className="comment-button-inactive">You must be logged in to add a comment!</h5>)}
@@ -173,7 +173,7 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
 
                 </div>
             
-                {guestMode == false ? (
+                {guestMode === false ? (
                 <h5 className="comment-button" onClick={() => toggleCommentForm(answerId)}>Add Comment</h5>
                 ) : (
                 <h5 className="comment-button-inactive">You must be logged in to add a comment!</h5>)}
