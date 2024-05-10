@@ -104,6 +104,7 @@ function EditQuestionForm({ questionId, showProfileFunc, showEditFormFunc , user
               <button type="button" className="deleteButton" onClick={handleDelete}>Delete Question</button>
               <span className="required-text">* indicates mandatory fields</span>
             </div>
+            <div style={{ height: '20px'}}></div>
           </form>
         </div>
       );

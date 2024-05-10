@@ -20,7 +20,7 @@ function App() {
         console.log('Login status:', response.data.isLoggedIn);
         console.log('User data:', response.data.user);
         if (response.data.isLoggedIn) {
-          setUser({ isLoggedIn: true, username: response.data.user.email, userId: response.data.user.userId, isGuest: false});
+          setUser({ isLoggedIn: true, username: response.data.user.username, email: response.data.user.email, userId: response.data.user.userId, isGuest: false});
           console.log('User is logged in:', response.data.user.email);
         }
       } catch (error) {

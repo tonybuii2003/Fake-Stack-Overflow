@@ -37,15 +37,15 @@ function QuestionForm({showQuestionsFunc, user}) {
       return;
     }
     
-    addNewQuestion(questionTitle, questionText, questionTags, user.username, questionSummary);
+    addNewQuestion(questionTitle, questionText, questionTags, user.email, questionSummary);
     console.log({ questionTitle });
   }
   
-  const addNewQuestion = async (questionTitle, questionText, questionTags, username, questionSummary) => {
+  const addNewQuestion = async (questionTitle, questionText, questionTags, email, questionSummary) => {
     
     questionTitle = questionTitle.trim();
     questionText = questionText.trim();
-    username = username.trim();
+    email = email.trim();
     questionTags = questionTags.trim();
     questionSummary = questionSummary.trim();
     
@@ -64,7 +64,7 @@ function QuestionForm({showQuestionsFunc, user}) {
       alert('The summary must not exceed 140 characters.');
       return;
     }
-    if (!questionTitle || !questionText || !username || !questionTags) {
+    if (!questionTitle || !questionText || !email || !questionTags) {
       alert('Please fill in all required fields.');
       return;
     }
@@ -86,7 +86,7 @@ function QuestionForm({showQuestionsFunc, user}) {
             summary: questionSummary,
             text: questionText,
             tags: tags,
-            asked_by: username
+            asked_by: email
         });
         setQuestionTitle('');
         setQuestionText('');

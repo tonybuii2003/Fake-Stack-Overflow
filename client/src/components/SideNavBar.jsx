@@ -7,6 +7,7 @@ import QuestionAndAnswers from './QuestionAndAnswers';
 import AnswerForm from './AnswerForm';
 import Profile from './Profile';
 import QuestionEditForm from './QuestionEditForm';
+import TagEditForm from './TagEditForm';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 axios.defaults.withCredentials = true;
@@ -25,12 +26,26 @@ function SideNavBar({showQuestions, setShowQuestions,
     const [showQuestionAndAnswers, setQuestionAndAnswers] = useState(false);
     const [showAnswerForm, setShowAnswerForm] = useState(false);
     const [currentQID, setCurrentQID] = useState('null');
+    const [currentTID, setCurrentTID] = useState('null');
     const [showEditForm, setShowEditForm] = useState(false);
+    const [showTagEditForm, setShowTagEditForm] = useState(false);
+    const [currentUsername, setCurrentUsername] = useState('null');
     const navigate = useNavigate();
     console.log("current user: ", user);
     useEffect(() => {
         showQuestionsSearchFunc();
       }, [onSubmitSearch]); 
+    
+      const fetchDetails = async (req, res) => {
+        try {
+          console.log(`http://localhost:8000/user/${user.userId}/username`);
+          const response = await axios.get(`http://localhost:8000/user/${user.userId}/username`);
+          setCurrentUsername(response.data);
+        } catch (error) {
+          console.error('Failed to fetch details:', error);
+        }
+    }
+    fetchDetails();
     function showQuestionsFunc() {
         setShowQuestions(true);
         setShowSearchResults(false);
@@ -44,6 +59,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setShowAnswerForm(false);
         setShowProfile(false);
         setShowEditForm(false);
+        setShowTagEditForm(false);
     }
     function showTagsFunc() {
         setShowTags(true);
@@ -59,6 +75,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setShowAnswerForm(false);
         setShowProfile(false);
         setShowEditForm(false);
+        setShowTagEditForm(false);
     }
     function showQuestionsSearchFunc(){
         setShowTags(false);
@@ -68,6 +85,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setQuestionAndAnswers(false);
         setShowAnswerForm(false);
         setShowEditForm(false);
+        setShowTagEditForm(false);
     }
     function showQuestionFormFunc() {
         setShowQuestions(false);
@@ -78,6 +96,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setQuestionAndAnswers(false);
         setShowAnswerForm(false);
         setShowEditForm(false);
+        setShowTagEditForm(false);
     }
     function showAnswerFormFunc() {
         setShowAnswerForm(true);
@@ -86,6 +105,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setQuestionFormOpened(false);
         setShowQuestions(false);
         setShowEditForm(false);
+        setShowTagEditForm(false);
     }
     function showQuestionAndAnswersFunc() {
         setQuestionAndAnswers(true);
@@ -94,6 +114,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setShowQuestions(false);
         setShowAnswerForm(false);
         setShowEditForm(false);
+        setShowTagEditForm(false);
     }
     function showProfileFunc() {
         setShowProfile(true);
@@ -106,6 +127,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setTagsBackgroundColor('#ffffff');
         setShowEditForm(false);
         setQuestionAndAnswers(false);
+        setShowTagEditForm(false);
     }
     function showEditFormFunc() {
         setShowEditForm(true);
@@ -114,7 +136,19 @@ function SideNavBar({showQuestions, setShowQuestions,
         setShowQuestions(false);
         setShowAnswerForm(false);
         setShowProfile(false);
+        setShowTagEditForm(false);
     }
+
+    function showTagEditFormFunc() {
+        setShowTagEditForm(true);
+        setShowEditForm(false);
+        setShowTags(false);
+        setQuestionFormOpened(false);
+        setShowQuestions(false);
+        setShowAnswerForm(false);
+        setShowProfile(false);
+    }
+
     const handleClickTagsBtn = () => {
         setOption('newest');
         showTagsFunc()
@@ -175,7 +209,7 @@ function SideNavBar({showQuestions, setShowQuestions,
                     </div>
                 )}
                 {!user.isGuest && (
-                    <p id="welcomeMessage">Welcome {user.username}!</p>
+                    <p id="welcomeMessage">Welcome {currentUsername}!</p>
                 )}
                 {user.isLoggedIn && (
                 <button onClick={handleLogout} className="logoutButton">Logout</button>
@@ -212,6 +246,12 @@ function SideNavBar({showQuestions, setShowQuestions,
                                 
                                 user={user}
                                 />}
+            {showTagEditForm && <TagEditForm 
+                tagId={currentTID} 
+                showProfileFunc={showProfileFunc}
+                showTagEditFormFunc={showTagEditFormFunc} 
+                setCurrentTID={setCurrentTID}
+                />}
             {showTags &&
             <Tags
                 setShowSearchResults={setShowSearchResults}
@@ -222,7 +262,7 @@ function SideNavBar({showQuestions, setShowQuestions,
                 user={user}
                 />}
 
-            {showProfile && <Profile showEditFormFunc={showEditFormFunc} setCurrentQID={setCurrentQID} userToken={user} asGuest={user.isGuest}/>}
+            {showProfile && <Profile showEditFormFunc={showEditFormFunc} setCurrentQID={setCurrentQID} userToken={user} asGuest={user.isGuest} showTagEditFormFunc={showTagEditFormFunc} setCurrentTID={setCurrentTID}/>}
             
         </div>
     );

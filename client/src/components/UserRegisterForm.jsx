@@ -4,8 +4,8 @@ import '../stylesheets/UserLoginRegisterForms.css';
 import axios from 'axios';
 function UserRegisterForm({switchSubpageFunc}) {
 
-  const [fullname, setFullname] = useState('');
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVerification, setPasswordVerification] = useState('');
 
@@ -24,23 +24,9 @@ function UserRegisterForm({switchSubpageFunc}) {
     }
   }
 
-  const registerNewUser = async (fullname, username, password, passwordVerify) => {
-    let fullnameTrim = fullname.replace(/\s+/g, ' ');
-    let names = fullnameTrim.split(' ');
-    names = names.filter(name => name !== '' && name !== ' ');
-    console.log(names);
-    if(names.length <= 1 || names.length >= 3){
-        alert('Full names only include a first name and a last name, and may not have any special characters.');
-        return;
-    }
-    const firstname = names[0];
-    const lastname = names[1];
-    const nameRegex = /[\p{P}\p{S}\p{N}]/u;
-    if(nameRegex.test(firstname) || nameRegex.test(lastname)){
-        alert('Full names only include a first name and a last name, and may not have any special characters.');
-        return;
-    }
+  const registerNewUser = async (username, email, password, passwordVerify) => {
     let usernameTrim = username.trim();
+    let emailTrim = email.trim();
     let passwordTrim = password.trim();
     let passwordVerifyTrim = passwordVerify.trim();
     if(passwordTrim !== passwordVerifyTrim){
@@ -48,13 +34,12 @@ function UserRegisterForm({switchSubpageFunc}) {
         return;
     }
     
-    const usernameRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-    if(usernameRegex.test(usernameTrim)){
+    const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+    if(emailRegex.test(emailTrim)){
         try {
             await axios.post(`http://localhost:8000/register`, {
-              first_name: firstname,
-              last_name: lastname,
-              email: username,
+              username: usernameTrim,
+              email: emailTrim,
               password: passwordTrim,
             });
             switchSubpageFunc("login");
@@ -88,7 +73,7 @@ function UserRegisterForm({switchSubpageFunc}) {
   
   const handleSubmit = (e) => {
     e.preventDefault(); 
-    registerNewUser(fullname, username, password, passwordVerification);
+    registerNewUser(username, email, password, passwordVerification);
   }
 
   const handleFormChanges = (t, e) => {
@@ -147,27 +132,27 @@ function UserRegisterForm({switchSubpageFunc}) {
       <div className="registerBoxWrapper">
         <div className="registerForm">
           <form id="registerForm" onSubmit={handleSubmit}>
-            <label htmlFor="fullname">Full Name</label>
-            <input
-              type="text"
-              id="fullname"
-              name="fullname"
-              placeholder="Enter first and last name"
-              required
-              maxLength="256"
-              value={fullname} 
-              onChange={(e) => setFullname(e.target.value)}
-            />
-            <label htmlFor="username">Email</label>
+            <label htmlFor="username">Username</label>
             <input
               type="text"
               id="username"
               name="username"
+              placeholder="Enter username"
+              required
+              maxLength="256"
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
               placeholder="Enter email address"
               required
-              value={username} 
+              value={email} 
               maxLength="254"
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <label htmlFor="password">Password</label>
             <input

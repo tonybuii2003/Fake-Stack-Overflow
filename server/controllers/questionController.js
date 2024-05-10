@@ -37,7 +37,7 @@ async function postQuestion(req, res) {
         const tagIds = await Promise.all(tags.map(async (tagName) => {
             let tag = await Tag.findOne({ name: tagName });
             if (!tag) {
-                tag = new Tag({ name: tagName });
+                tag = new Tag({ name: tagName, owner: asked_by });
 
                 await tag.save();
             }

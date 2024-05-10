@@ -8,6 +8,7 @@
     justify-content: center;
     flex-grow: 1;
   }
+
   .questionForm form, .answerForm form, .editquestionForm form{
     margin: 0 auto; 
   }

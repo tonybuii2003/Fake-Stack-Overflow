@@ -3,12 +3,11 @@ const User = require('../models/users');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 async function registerUser(req, res) {
-    const { first_name, last_name, email, password } = req.body;
+    const { username, email, password } = req.body;
     try {
         const hashedPW = await bcrypt.hash(password, 10);
         const newUser = new User({
-            first_name,
-            last_name,
+            username,
             email,
             password: hashedPW
         });
@@ -19,9 +18,20 @@ async function registerUser(req, res) {
         res.status(500).json({ message: error.message });
     }
 }
+const getUsernameFromId = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json(user.username);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 const loginUser = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { username, email, password } = req.body;
         const user = await User.findOne({email});
         if (!user){
             return res.status(404).send('User not found');
@@ -31,14 +41,15 @@ const loginUser = async (req, res) => {
             return res.status(401).send('Invalid credentials');
         }
         const token = jwt.sign(
-            { userId: user._id, email: user.email },
+            { userId: user._id, username: user.username, email: user.email },
             process.env.JWT_SECRET,
             { expiresIn: '1h' }
         );
         req.session.token = token;
-        req.session.user = { userId: user._id, email: user.email, reputation: user.reputation };
+        req.session.user = { userId: user._id, username: user.username, email: user.email, reputation: user.reputation };
         res.status(200).json({ message: 'Login successful', user: req.session.user });
         console.log('Session Data:', req.session);
+        console.log(user);
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).send('Error logging in user');
@@ -68,6 +79,7 @@ const getLoggedIn = async (req, res) => {
             console.log('JWT verified successfully, user:', user);
             return res.json({ isLoggedIn: true, user: {
                 userId: user.userId,
+                username: user.username,
                 email: user.email,
                 reputation: req.session.user.reputation
             }});
@@ -88,6 +100,17 @@ const getUserById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+const getUserByEmail = async (req, res) => {
+    try {
+        const user = await User.findOne(req.params.email);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 
-module.exports = { registerUser, loginUser, logoutUser, getLoggedIn, getUserById};
+module.exports = { registerUser, loginUser, logoutUser, getLoggedIn, getUserById, getUsernameFromId, getUserByEmail};

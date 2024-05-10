@@ -19,22 +19,21 @@ function TagBanner({tags, showQuestionFormFunc, user, currentPage, totalPages, h
             <h1 className="allTagsText">All Tags</h1>
             <span className="tagCountText">{tagCount} {tagCountText}</span>
         </div>
+        {totalPages === 0 ? null : 
         <div className="middleSection">
-
-          <button id="themeButtonPrevOn" 
-            disabled={currentPage === 0}
-            onClick={() => handlePages('prev')}>
+            <button id="themeButtonPrevOn" 
+                disabled={currentPage === 0}
+                onClick={() => handlePages('prev')}>
               Prev
-          </button>
-          <div className="themePageIndex">{currentPage + 1} / {totalPages}</div>
-          <button id="themeButtonNext" 
+            </button>
+            <div className="themePageIndex">{currentPage + 1} / {totalPages}</div>
+            <button id="themeButtonNext" 
                   
                   onClick={() => handlePages('next')}>
               Next
-          </button>
-      
-           
-          </div>
+            </button>
+        </div>
+        }
         <div className="rightSection">
         {!userGuest ? 
           (<button id="themeButtonAskQuestion" onClick={handleClick}> Ask Question</button>
