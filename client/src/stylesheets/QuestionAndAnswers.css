@@ -120,6 +120,7 @@
     overflow-y: auto;
   }
   .answer-question {
+    justify-content: space-between;
     flex-direction: row;
     display: flex;
     padding: 20px;
@@ -169,7 +170,7 @@
   }
   .navigation-button {
     display: flex;
-    justify-content: center; /* Center the buttons horizontally */
+    justify-content: space-between; /* Center the buttons horizontally */
     padding: 0px 20px;
     flex-shrink: 0;
   }

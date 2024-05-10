@@ -265,7 +265,7 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
           : 
           (<button id="themeButtonAnswerQuestionInactive" onClick={() => handleDeny("answer a question")}> Answer Question</button>
           )}
-          <div className="navigation-button">
+          {answers.length === 0 ? null : <div className="navigation-button">
                         <button 
                             disabled={currentPage === 0}
                             onClick={() => handlePages('prev')}
@@ -278,7 +278,7 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
                             Next
                         </button>
                     </div>
-            </div>
+            }</div>
         </div>
     );
 }
