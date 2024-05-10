@@ -49,8 +49,7 @@ async function initializeData() {
 
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
   const adminUser = new User({
-    first_name: 'Admin',
-    last_name: 'User',
+    username: 'Admin',
     email: adminUsername,
     password: hashedPassword,
     reputation: 1000,
@@ -68,7 +67,7 @@ async function initializeData() {
 async function createSampleData() {
   const tags = ['javascript', 'nodejs', 'react', 'mongodb', 'express', 'css', 'html'];
   const tagDocuments = await Promise.all(tags.map(async (tagName) => {
-    const tag = new Tag({ name: tagName });
+    const tag = new Tag({ name: tagName, owner: 'Admin' });
     await tag.save();
     return tag;
   }));
