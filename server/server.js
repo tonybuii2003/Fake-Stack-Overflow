@@ -5,6 +5,7 @@ const answerRouter = require("./routes/answerRoutes");
 const questionRouter = require("./routes/questionRoutes");
 const tagRouter = require("./routes/tagRoutes");
 const userRouter = require('./routes/userRoutes');
+const commentRouter = require('./routes/commentRoutes');
 const mongoose = require("mongoose");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -36,6 +37,7 @@ app.use("/", questionRouter);
 app.use("/", answerRouter);
 app.use("/", tagRouter);
 app.use('/', userRouter);
+app.use('/', commentRouter);
 
 app.use((req, res, next) => {
     console.log('Request Body:', req.body);

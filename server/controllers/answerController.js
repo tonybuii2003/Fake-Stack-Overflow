@@ -2,7 +2,7 @@ const Answer = require('../models/answers');
 const Question = require('../models/questions');
 
 async function getAnswers(req, res) {
-    const questionId = req.params.id; 
+    const questionId = req.params.qid; 
 
     try {
         const question = await Question.findById(questionId).populate('answers');
@@ -19,11 +19,12 @@ async function createAnswer(req, res) {
     const answer = new Answer({
         text: req.body.text,
         ans_by: req.body.ans_by,
+        questionId: req.body.questionId
     });
 
     try {
         const newAnswer = await answer.save();
-        const question = await Question.findById(req.params.id);
+        const question = await Question.findById(req.params.qid);
         question.answers.push(newAnswer._id);
         await question.save();
         res.status(201).json(newAnswer);

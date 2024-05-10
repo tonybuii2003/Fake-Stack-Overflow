@@ -27,7 +27,7 @@ function UserLoginForm({switchSubpageFunc, setTryLogin, tryLogin}) {
     console.log('username:', username, 'password:', password)
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/login', { email: username, password: password });
+      const response = await axios.post('http://localhost:8000/user/login', { email: username, password: password });
       console.log('Login response:', response);
       setTryLogin(!tryLogin)
     } catch (error) {

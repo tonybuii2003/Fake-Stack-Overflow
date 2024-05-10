@@ -27,9 +27,10 @@ function AnswerForm({qid, showQuestionAndAnswersFunc, user}) {
             return;
           }
         try {
-            await axios.post(`http://localhost:8000/question/${qid}/answer`, {
+            await axios.post(`http://localhost:8000/answer/${qid}`, {
                 text: text,
-                ans_by: username
+                ans_by: username,
+                questionId: qid
             });
             setAnswerText('');
             showQuestionAndAnswersFunc();

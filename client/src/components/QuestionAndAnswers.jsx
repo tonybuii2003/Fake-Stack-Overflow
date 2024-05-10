@@ -23,7 +23,7 @@ function QuestionAndAnswers({qid, showQuestionFormFunc, showAnswerFormFunc, user
                 await axios.put(`http://localhost:8000/question/${qid}/view`);
                 const questionResponse = await axios.get(`http://localhost:8000/question/${qid}`);
                 setQuestion(questionResponse.data);
-                const answersResponse = await axios.get(`http://localhost:8000/question/${qid}/answer`);
+                const answersResponse = await axios.get(`http://localhost:8000/answer/${qid}`);
                 console.log("fetchy:", answersResponse.data);
                 setAnswers(answersResponse.data);
                 //setCurrentPage(currentPage);

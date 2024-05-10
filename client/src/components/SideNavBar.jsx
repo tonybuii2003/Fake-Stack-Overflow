@@ -94,6 +94,7 @@ function SideNavBar({showQuestions, setShowQuestions,
         setShowQuestions(false);
         setShowAnswerForm(false);
         setShowEditForm(false);
+        setShowProfile(false);
     }
     function showProfileFunc() {
         setShowProfile(true);
@@ -135,7 +136,7 @@ function SideNavBar({showQuestions, setShowQuestions,
     const handleLogout = async () => {
         try{
             console.log("Logging out...");
-            const response = await axios.post('http://localhost:8000/logout');
+            const response = await axios.post('http://localhost:8000/user/logout');
             console.log("Logout successful:", response.data);
             setTryLogin(!tryLogin)
             if (response.status === 200) {
@@ -222,7 +223,7 @@ function SideNavBar({showQuestions, setShowQuestions,
                 user={user}
                 />}
 
-            {showProfile && <Profile showEditFormFunc={showEditFormFunc} setCurrentQID={setCurrentQID} userToken={user} asGuest={user.isGuest}/>}
+            {showProfile && <Profile showEditFormFunc={showEditFormFunc} showQuestionAndAnswersFunc = {showQuestionAndAnswersFunc} setCurrentQID={setCurrentQID} userToken={user} asGuest={user.isGuest}/>}
             
         </div>
     );

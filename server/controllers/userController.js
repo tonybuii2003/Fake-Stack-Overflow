@@ -38,7 +38,6 @@ const loginUser = async (req, res) => {
         req.session.token = token;
         req.session.user = { userId: user._id, email: user.email, reputation: user.reputation };
         res.status(200).json({ message: 'Login successful', user: req.session.user });
-        console.log('Session Data:', req.session);
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).send('Error logging in user');

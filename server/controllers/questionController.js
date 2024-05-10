@@ -90,6 +90,18 @@ const getQuestionsByUsername = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+const getQuestionsByUserAnswer = async (req, res) => {
+    try {
+        const username = req.params.username;
+        const answers = await Answer.find({ ans_by: username });
+        console.log('Answers:', answers);
+        const questionIds = answers.map(answer => answer.questionId);
+        const questions = await Question.find({ _id: { $in: questionIds } }).populate('tags').populate('answers');
+        res.status(200).json(questions);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 async function deleteQuestion(req, res) {
     try {
         const question = await Question.findById(req.params.id).populate('answers');
@@ -155,12 +167,14 @@ async function upVoteQuestion(req, res) {
         if (!question) {
             return res.status(404).json({ message: "Question not found." });
         }
-
-        // Update question votes
+        if (voter.email === question.asked_by) {
+            return res.status(403).json({ message: "You cannot vote for your own question." });
+        }
+        
         question.votes = (question.votes || 0) + 1;
         await question.save();
 
-        // Update user reputation
+        
         const questionOwner = await User.findOne({ email: question.asked_by });
         if (questionOwner) {
             questionOwner.reputation += 5;
@@ -188,11 +202,13 @@ async function downVoteQuestion(req, res) {
             return res.status(404).json({ message: "Question not found." });
         }
 
-        // Update question votes
+        if (voter.email === question.asked_by) {
+            return res.status(403).json({ message: "You cannot vote for your own question." });
+        }
+
         question.votes = (question.votes || 0) - 1;
         await question.save();
 
-        // Update user reputation
         const questionOwner = await  User.findOne({ email: question.asked_by });
         if (questionOwner) {
             questionOwner.reputation -= 10;
@@ -205,4 +221,4 @@ async function downVoteQuestion(req, res) {
         res.status(500).json({ message: "Error processing vote." });
     }
 }
-module.exports = { getQuestions, getQuestionByID, postQuestion, incrementQuestionView, getQuestionsByUsername, deleteQuestion, updateQuestion, upVoteQuestion, downVoteQuestion};
+module.exports = { getQuestions, getQuestionByID, postQuestion, incrementQuestionView, getQuestionsByUsername, deleteQuestion, updateQuestion, upVoteQuestion, downVoteQuestion, getQuestionsByUserAnswer};

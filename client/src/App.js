@@ -16,7 +16,7 @@ function App() {
     
     const checkLoginStatus = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/loggedIn', { withCredentials: true });
+        const response = await axios.get('http://localhost:8000/user/loggedIn', { withCredentials: true });
         console.log('Login status:', response.data.isLoggedIn);
         console.log('User data:', response.data.user);
         if (response.data.isLoggedIn) {

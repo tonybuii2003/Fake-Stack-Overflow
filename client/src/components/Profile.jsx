@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ProfileQuestionsList from './ProfileQuestionList';
+import AnsweredQuestionsList from './AnsweredQuestionsList'
 import '../stylesheets/Profile.css';
-import User from '../'
-export default function Profile({showEditFormFunc, userToken, setCurrentQID, asGuest}) {
+export default function Profile({showEditFormFunc, showQuestionAndAnswersFunc, userToken, setCurrentQID, asGuest}) {
     const [user, setUser] = useState(null);
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [questionAnswered, setQuestionAnswered] = useState({}); 
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchData = async () => {
             const userData = await axios.get(`http://localhost:8000/user/${userToken.userId}`);
             console.log("userData: ", userData.data);
             setUser(userData.data);
             const userQuestions = await axios.get(`http://localhost:8000/question/byuser/${userData.data.email}`);
             setQuestions(userQuestions.data);
+            const questionAnsweredByUser = await axios.get(`http://localhost:8000/question/byuseranswer/${userData.data.email}`);
+            setQuestionAnswered(questionAnsweredByUser.data);
             setLoading(false);
         };
 
         if (userToken && userToken.userId) {
-            fetchUserData();
+            fetchData();
         }
         else if(asGuest){
             setLoading(false);
@@ -50,6 +53,8 @@ export default function Profile({showEditFormFunc, userToken, setCurrentQID, asG
                 <div className="questionsProfile">
                     <div className="questionBannerProfile">Your Questions</div>
                     <ProfileQuestionsList showEditFormFunc ={showEditFormFunc} setCurrentQID={setCurrentQID} questions={questions}/>
+                    <div className="questionBannerProfile">Questions Answered By You</div>
+                    <AnsweredQuestionsList showQuestionAndAnswersFunc ={showQuestionAndAnswersFunc} setCurrentQID={setCurrentQID} questions={questionAnswered}/>
                 </div>}
         </div>
     );
