@@ -33,7 +33,6 @@ git clone git@github.com:sbu-ckane-s24-cse316-pa04org/pa04-divinedragons.git
 or https://github.com/sbu-ckane-s24-cse316-pa04org/pa04-divinedragons.git
 cd pa04-divinedragons
 ```
-
 ### Server Setup
 Follow these steps to set up the server:
 
