@@ -45,5 +45,5 @@ jobs:
           PORT: ${{ secrets.PORT }}
         run: |
           cd server  # Adjusted directory name
-          npm start
+          npm start &
 
