@@ -9,7 +9,7 @@ const commentRouter = require('./routes/commentRoutes');
 const mongoose = require("mongoose");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const port = 8000;
+const port = 8001;
 const corsOptions = {
     origin: 'http://localhost:3000', 
     credentials: true, 

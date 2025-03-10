@@ -1,0 +1,44 @@
+ame: Deploy MERN App to Local Runner
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies for Backend
+        run: |
+          cd server  # Adjusted directory name
+          npm install
+      
+      - name: Install dependencies for Frontend
+        run: |
+          cd client
+          npm install
+
+      - name: Build Frontend
+        run: |
+          cd client
+          npm run build
+
+      # Copy build folder from frontend to the backend's public directory
+      - name: Copy frontend build to backend
+        run: |
+          cp -r client/build/* server/public/  # Adjusted directory name
+
+      - name: Deploy Backend
+        run: |
+          cd server  # Adjusted directory name
+          npm start
