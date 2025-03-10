@@ -9,7 +9,8 @@ const commentRouter = require('./routes/commentRoutes');
 const mongoose = require("mongoose");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const port = 5001;
+require('dotenv').config();
+const port = process.env.PORT || 5000;
 const corsOptions = {
     origin: 'http://localhost:3000', 
     credentials: true, 
