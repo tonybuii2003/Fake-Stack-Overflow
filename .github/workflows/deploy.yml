@@ -40,6 +40,9 @@ jobs:
           cp -r client/build/* server/public/  # Adjusted directory name
 
       - name: Deploy Backend
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          PORT: ${{ secrets.PORT }}
         run: |
           cd server  # Adjusted directory name
           npm start
