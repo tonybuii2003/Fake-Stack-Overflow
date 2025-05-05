@@ -1,4 +1,5 @@
-![Client Design](images/Client.drawio.png)
+
+<img src="images/Client.drawio.png" alt="Client Design" style="display:block; max-width:100%; margin-bottom:1rem; width:500px; height:auto;" />
 ---
 ![Database Design](images/Database.drawio.png)
 ---
