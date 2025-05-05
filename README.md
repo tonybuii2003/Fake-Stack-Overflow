@@ -1,9 +1,10 @@
 
 <img src="images/Client.drawio.png" alt="Client Design" style="display:block; max-width:100%; margin-bottom:1rem; width:500px; height:auto;" />
----
-![Database Design](images/Database.drawio.png)
----
-![Server Design](images/Server.drawio.png)
+
+<img src="images/Database.drawio.png" alt="Database Design" style="display:block; max-width:100%; margin-bottom:1rem; width:500px; height:auto;" />
+
+<img src="images/Server.drawio.png" alt="Database Design" style="display:block; max-width:100%; margin-bottom:1rem; width:500px; height:auto;" />
+
 ## Instructions to setup and run project
 
 ## Tony Bui Contribution
