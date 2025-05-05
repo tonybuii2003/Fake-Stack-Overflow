@@ -1,9 +1,21 @@
 
-<img src="images/Client.drawio.png" alt="Client Design" style="display:block; max-width:100%; margin-bottom:1rem; width:500px; height:auto;" />
-
-<img src="images/Database.drawio.png" alt="Database Design" style="display:block; max-width:100%; margin-bottom:1rem; width:500px; height:auto;" />
-
-<img src="images/Server.drawio.png" alt="Database Design" style="display:block; max-width:100%; margin-bottom:1rem; width:500px; height:auto;" />
+<div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
+  <img
+    src="images/Client.drawio.png"
+    alt="Client Design"
+    style="width:300px; height:auto;"
+  />
+  <img
+    src="images/Database.drawio.png"
+    alt="Database Design"
+    style="width:300px; height:auto;"
+  />
+  <img
+    src="images/Server.drawio.png"
+    alt="Server Design"
+    style="width:300px; height:auto;"
+  />
+</div>
 
 ## Instructions to setup and run project
 
