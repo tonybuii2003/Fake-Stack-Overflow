@@ -1,4 +1,22 @@
 
+## Introduction
+### Description
+
+### Screenshot:
+<div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
+  <img
+    src="https://imgur.com/Io6xPax.png"
+    alt="MainScreen"
+    style="width:500px; height:auto;"
+  />
+  <img
+    src="https://imgur.com/V6kA0WL.png"
+    alt="Main-Loged in"
+    style="width:500px; height:auto;"
+  />
+</div>
+### Software Architecture
+
 <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
   <img
     src="images/Client.drawio.png"
