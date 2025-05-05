@@ -1,7 +1,7 @@
 
 ## Introduction
 ### Description
-
+A clone of StackOverflow using MERN stack
 ### Screenshot:
 <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
   <img
