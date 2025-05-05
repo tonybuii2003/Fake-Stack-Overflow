@@ -15,6 +15,7 @@
     style="width:500px; height:auto;"
   />
 </div>
+
 ### Software Architecture
 
 <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
