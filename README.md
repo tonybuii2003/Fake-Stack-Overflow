@@ -3,17 +3,17 @@
   <img
     src="images/Client.drawio.png"
     alt="Client Design"
-    style="width:300px; height:auto;"
+    style="width:330px; height:auto;"
   />
   <img
     src="images/Database.drawio.png"
     alt="Database Design"
-    style="width:300px; height:auto;"
+    style="width:330px; height:auto;"
   />
   <img
     src="images/Server.drawio.png"
     alt="Server Design"
-    style="width:300px; height:auto;"
+    style="width:330px; height:auto;"
   />
 </div>
 
